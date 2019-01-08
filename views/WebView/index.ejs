@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <% include ./links.ejs %>
+</head>
+  <body>
+
+    <!--Load Data To Script-->
+    <% include ./loadData.ejs %>
+    
+    <!--Page-->
+    <div class="card">
+        <div class="card-header rtl">
+            <% include ./header.ejs %>
+        </div>
+
+        <div class="card-body" id="mainView" style="display: block;">
+
+            <div class="row rtl" style="font-size: 17px;">
+                    <div class="col-md-2 col-sm-2"></div>
+                    <div class="col-md-2 col-sm-2"> 
+                    <p id="rtl"> <%=page.subTitle%> : </p>
+                    </div>
+                    <div class="col-md-2 col-sm-2"></div>
+            </div>
+
+
+            <div class="row rtl">
+                    <% include ./form.ejs %>
+            </div>
+
+            <br>
+            
+            <div class="row" id="counterBox" style="font-size: 13px; display: none;">
+                    <% include ./counters.ejs %>
+            </div>
+
+            <div class="row" id="hallBox" style="font-size: 13px; display: none;">
+                    <% include ./halls.ejs %>
+            </div>
+
+            <br>
+
+            <div class="row rtl" style="font-size: 13px;">
+                    <% include ./footer.ejs %>
+            </div>
+            <br>
+        </div>
+
+        <div class="card-body rtl" id="endPage" style="display: none; font-size: 18px;">
+                <% include ./successPage.ejs %>
+        </div>
+    </div>
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<div class="col-md-2 col-sm-2"></div>
+    <div class="col-md-8 col-sm-8">
+        <div class="card"  style="font-size: 13px;">
+        <!--Card content-->
+            <div class="card-body px-lg-5 pt-0">
+
+                <!-- Form -->
+                <form class="text-center" style="color: #757575;">
+                    <br>
+                    <div class="form-row">
+                    <div class="col">
+                    <!-- Server Address -->
+                    <div class="md-form form-lg">
+                        <input type="text" id="serverAddress" class="form-control" style="font-size: 15px;" placeholder='<%=page.firstInput%>'>
+                        <label></label>
+                        <p id="connectionState" style="color: red" class="form-text text-muted mb-4"></p>
+                    </div>
+                    </div>
+                    </div>
+                    <br>
+                    <!-- Branch Identity -->
+                    <div class="form-row">
+                    <div class="col">
+                        <div class="md-form form-lg">
+                            <input type="text" id="branchIdentity" class="form-control"  style="font-size: 15px;"  placeholder='<%=page.secondInput%>'>
+                            <p id="identityValidation"  style="color: red" class="form-text text-muted mb-4"></p>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Next button -->
+                    <div class="row">
+                    <div class="col-md-10 col-sm-10"></div>
+                    <div class="col-md-2 col-sm-2">
+                    <button type="button" onclick="connect()" style="width: 100px; font-size: 12px" class="btn btn-primary btn-rounded"><%=page.firstButton%></button>
+                    </div>
+                    </div>
+
+                </form>
+                
+                <!-- radio Button -->
+                <div class="row">
+                        <div class="form-check form-check-inline">
+                        <input type="radio" onchange="start()" checked class="form-check-input" id="allHalls" name="inlineMaterialRadiosExample">
+                        <label class="form-check-label" for="materialInline1"><%=page.firstRadio%></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                        <input type="radio" onchange="start()" disabled class="form-check-input" id="specificHalls" name="inlineMaterialRadiosExample">
+                        <label class="form-check-label" for="materialInline2"><%=page.secondRadio%></label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                        <input type="radio" onchange="start()" disabled class="form-check-input" id="specificCounters" name="inlineMaterialRadiosExample">
+                        <label class="form-check-label" for="materialInline3" ><%=page.thirdRadio%></label>
+                        </div>
+                </div>
+
+            </div>
+                            
+        </div>  
+    </div>
+<div class="col-md-2 col-sm-2"></div>
