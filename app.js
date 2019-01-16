@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var configurationsRouter = require('./src/Controllers/configurations.js');
 var io = require('socket.io-client');
-var socket = io.connect("http://10.0.0.221:3000/", {reconnection: true});
+var socket = io.connect("http://10.0.0.82:3000/", {reconnection: true});
 var app = express();
 var ejs = require('ejs');
 const isLocal = typeof process.pkg === 'undefined'
@@ -52,10 +52,10 @@ app.listen(Port,function(req,res){
 
 socket.on('connect', function () {
   serviceState = service.CONNECTED;
-  console.log('connected to http://10.0.0.221:3000');
+  console.log('connected to http://10.0.0.82:3000');
   socket.on('Queuing/branchUpdates', function (message){
     announcement.Play(()=>{
-      fs.writeFileSync("file.txt",JSON.stringify(message),"utf-8");
+      
     },message);
   })
 });

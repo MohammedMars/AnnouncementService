@@ -19,7 +19,7 @@ var cBRANCH_LEVEL=1;
 var cHALLS_LEVEL=2;
 var cCOUNTER_LEVEL=3;
 var command;
-//For filtering the message coming from endpoint to announce it
+
 
     //To caching the settings and branch configurations
     module.exports.Start=function(){
@@ -79,7 +79,6 @@ var command;
                         }    
                     }
                     Files=allFiles;
-                    //fs.writeFileSync("file.txt",JSON.stringify(Files),'utf-8');
                     callBack(cSUCCESS,Files);
                 }
             });
@@ -89,36 +88,53 @@ var command;
         }
     }
     
+    function removeEmptyRecords(callBack,rows){
+        try{
+        if(rows){
+            var records=[];
+            for(let i = 0 ; i < rows.length ; i++){
+                records.push(rows[i].filter(Boolean));
+            }
+            callBack(cSUCCESS,records);
+        }else{
+            callBack(cFAIL,null); 
+        }
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL,null); 
+        }
+    }
+
+    function getOneFileSet(callBack,language){
+        try{
+            if(Files){
+                var rows = Files.find((item)=>{return item.language==language});
+                if(rows){
+                    callBack(cSUCCESS,rows.files);
+                }else{
+                    callBack(cINVALID_LANGUAGE,null);
+                }
+            }else{
+                callBack(cFAIL,null);
+            }
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL,null);
+        }
+    }
+
     //Prepare the sounds file for specific language 
     function getRecords(callBack,language){
         try{
-            var rows=[];
-            if(Files){
-                for(let index =0; index<Files.length; index++){
-                    if(Files[index].language==language)
-                        {
-                            rows=Files[index].files;
-                            break;
-                        }
-                }
-                var files =[];
-                var records=[];
-                if(rows.length>0){
-                    for(let i = 0 ; i < rows.length ; i++){
-                        files=[];
-                        for(let j=0; j<rows[i].length;j++){
-                            if(rows[i][j].length>0)
-                                files.push(rows[i][j]);
-                        }
-                        records.push(files);
-                    }
-                    callBack(cSUCCESS,records);
+            getOneFileSet((result,rows)=>{
+                if(result==cSUCCESS){
+                    removeEmptyRecords((result,recods)=>{
+                        callBack(result,recods);
+                    },rows)
                 }else{
-                    callBack(cINVALID_LANGUAGE,records);
+                    callBack(result,null);
                 }
-            }else{
-                callBack(cFAIL,records);
-            }
+            },language)
         }catch(err){
             Log.ErrorLogging(err);
             callBack(cFAIL,null);
@@ -202,96 +218,183 @@ var command;
                 }
             },language);
         }catch(err){
-            console.log(err);
-            console.dir(err);
             Log.ErrorLogging(err);
+            callBack(cFAIL,null);
+        }
+    }
+
+    function isValidBranch(callBack,message){
+        try{
+            var result;
+            if(message.payload.transactionsInfo[0].branch_ID == branchId){
+                result=cSUCCESS;
+            }else{
+                result=cFAIL;
+            }
+            callBack(result);
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
+        }
+    }
+
+    function isValidHalls(callBack,message){
+        try{
+            isValidBranch((result)=>{
+                if(result==cSUCCESS){
+                    var temp = settings.halls.find((item)=>{return item.ID==message.payload.transactionsInfo[0].hall_ID})
+                    if(temp)
+                        result=cSUCCESS;
+                    else
+                        result=cFAIL;
+                }else{
+                    result=cFAIL;
+                } 
+                callBack(result)
+                },message)
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
+        }
+    }
+
+    function isValidCounters(callBack,message){
+        try{
+            isValidBranch((result)=>{
+                if(result){
+                    var temp = settings.counters.find((item)=>{return item.ID==message.payload.transactionsInfo[0].counter_ID})
+                    if(temp)
+                        result=cSUCCESS;
+                    else
+                        result=cFAIL;
+                }else{
+                    result=cFAIL;
+                }
+                callBack(result)
+            },message)
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
+        }
+    }
+
+    function prepareMessage(callBack,message){
+        try{
+            var finalResult;
+            isValidMessage((result)=>{
+                if(result==cSUCCESS){
+                    if(settings.level==cBRANCH_LEVEL){
+                        isValidBranch((result)=>{
+                            finalResult=result;
+                        },message)
+                    }else if(settings.level==cHALLS_LEVEL){
+                        isValidHalls((result)=>{
+                            finalResult=result;
+                        },message)
+                    }else if(settings.level==cCOUNTER_LEVEL){
+                        isValidCounters((result)=>{
+                            finalResult=result;
+                        },message)
+                    }
+                }else{
+                    finalResult=cFAIL;
+                }
+                callBack(finalResult);
+            },message);
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
         }
     }
 
     //Filtering the broad cast message to check if the message for any branch
     function filter(callBack,message){
         try{
-            if(message.payload.transactionsInfo && message.payload.transactionsInfo.length>0){
-                if(message.payload.transactionsInfo[0].state==3 || message.payload.transactionsInfo[0].state==5){
-                    var result;
-                    if(settings.level==cBRANCH_LEVEL){
-                        if(message.payload.transactionsInfo[0].branch_ID == branchId){
-                            result=cSUCCESS;
-                        }else{
-                            result=cFAIL;
-                        }
-                    }else if(settings.level==cHALLS_LEVEL){
-                        if(message.payload.transactionsInfo[0].branch_ID == branchId){
-                            for(let i = 0 ; i< settings.halls.length ; i++){
-                                if(message.payload.transactionsInfo[0].hall_ID==settings.halls[i].ID){
-                                    result=cSUCCESS;
-                                }
-                            }
-                        }else{
-                            result=cFAIL;
-                        }
-                    }else if(settings.level==cCOUNTER_LEVEL){
-                        if(message.payload.transactionsInfo[0].branch_ID == branchId){
-                            for(let i = 0 ; i< settings.counters.length ; i++){
-                                if(message.payload.transactionsInfo[0].counter_ID==settings.counters[i].ID){
-                                    result=cSUCCESS;
-                                }
-                            }
-                        }else{
-                            result=cFAIL;
-                        }
-                    }
-                }
-            }
-            if(result==cSUCCESS){
-                var letter = message.payload.transactionsInfo[0].symbol;
-                var customerNumber =letter+"-"+ message.payload.transactionsInfo[0].ticketSequence;
-                var counterId = message.payload.countersInfo[0].id;
-                var counterNumber;
-                for(let i = 0 ; i< settings.counters.length ; i++){
-                    if(counterId==settings.counters[i].ID){
-                        counterNumber=settings.counters[i].Number;
-                        break;
-                    }
-                }
-                var filterdMessage={"letter":letter,"customerNumber":customerNumber,"counterNumber":counterNumber,language:"en"}
+            prepareMessage((result)=>{
+                if(result==cSUCCESS){
+                    var letter = message.payload.transactionsInfo[0].symbol;
+                    var customerNumber =letter+"-"+ message.payload.transactionsInfo[0].ticketSequence;
+                    var counterId = message.payload.countersInfo[0].id;
+                    var temp =settings.counters.find((item)=>{return item.ID==counterId});
+                    var counterNumber=temp.Number;
+                var filterdMessage={"letter":letter,"customerNumber":customerNumber,"counterNumber":counterNumber,language:"en",SoundsFileName:""}
                 callBack(cSUCCESS,filterdMessage);
-            }else{
-                callBack(cFAIL,null);
-            }
+                }else{
+                    callBack(cFAIL,null);
+                }
+            },message)
     }catch(err){
         Log.ErrorLogging(err);
+        callBack(cFAIL,null);
     }
     }
 
+    function isMessage(callBack,message){
+        try{
+            if(message.payload.transactionsInfo && message.payload.transactionsInfo.length>0){
+                callBack(cSUCCESS);
+            }else{
+                callBack(cFAIL);
+            }
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
+        }
+    }
+
+    function isValidMessage(callBack,message){
+        try{
+            isMessage((result)=>{
+                if(result==cSUCCESS){
+                    if(message.payload.transactionsInfo[0].state==3 || message.payload.transactionsInfo[0].state==5){
+                        callBack(cSUCCESS);
+                    }else{
+                        callBack(cFAIL);
+                    }
+                }else{
+                    callBack(cFAIL);
+                }
+            },message)
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
+        }
+    }
+
+    function getSoundsFileName(callBack,filterdMessage){
+        try{
+            var SoundsFileName="No File";
+            for(let i=0;i<Files.length;i++){
+                if(Files[i].language==filterdMessage.language){
+                    SoundsFileName=Files[i].SoundsFile;
+                }
+            }
+            callBack(SoundsFileName);
+        }catch(err){
+            Log.ErrorLogging(err);
+            callBack(cFAIL);
+        }
+    }
     //Announce a filtered message
     module.exports.Play=function(callBack,message){
         try{
             filter((result,filterdMessage)=>{
                 if(result==cSUCCESS){
-                    var SoundsFileName="";
-                    for(let i=0;i<Files.length;i++){
-                        if(Files[i].language==filterdMessage.language){
-                            SoundsFileName=Files[i].SoundsFile;
-                        }
-                    }
-                    getFiles((result,files)=>{
-                        if(result==cSUCCESS){
-                            if(process.platform==cWindows){
-                                play_Windows(files,SoundsFileName);
-                            }else{
-                                var index=0;
-                                play_XOS(files,index,SoundsFileName);
+                    getSoundsFileName((SoundsFileName)=>{
+                        getFiles((innerResult,files)=>{
+                            if(innerResult==cSUCCESS){
+                                if(process.platform==cWindows){
+                                    play_Windows(files,SoundsFileName);
+                                }else{
+                                    var index=0;
+                                    play_XOS(files,index,SoundsFileName);
+                                }
                             }
-                            callBack(cSUCCESS);
-                        }else if(result==cFAIL)
-                            callBack(cFAIL);
-                        else if(result==cINVALID_LANGUAGE)
-                            callBack(cINVALID_LANGUAGE);
-                        },filterdMessage)
-                }else{
-                    callBack(cFAIL);
+                            callBack(innerResult);
+                            },filterdMessage)
+                    },filterdMessage)
                 }
+                callBack(result);
             },message)
         }catch(err){
             Log.ErrorLogging(err);

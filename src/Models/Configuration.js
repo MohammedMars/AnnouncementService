@@ -130,7 +130,7 @@ var Pages;
     function getBranch(callBack,branchIdentity){
         try{
             var result=cFAIL;
-            var branch;
+            var branch=null;
                 for(let i = 0 ; i<Branches.length ; i++){
                     if(branchIdentity==Branches[i].Identity){
                         branch=Branches[i];
@@ -138,32 +138,23 @@ var Pages;
                         break;
                     }
                 }
-                if(result==cSUCCESS){
-                    callBack(result,branch);
-                }else if (result==cFAIL){
-                    callBack(result,null)
-                }
+                callBack(result,branch);
         }catch(err){
             Log.ErrorLogging(err);
         }
     }
-
     //Get the page view for specific language
     module.exports.getPage=function(callBack,language){
         try{
             var result=cFAIL;
-            var page;
+            var page=null;
             for(let i = 0 ; i<Pages.length ; i++){
                 if(Pages[i].language == language){
                     result=cSUCCESS;
                     page=Pages[i];
                 }
             }
-            if(result==cSUCCESS){
-                callBack(cSUCCESS,page);
-            }else{
-                callBack(cFAIL,null);
-            }
+            callBack(result,page);
         }catch(err){
             Log.ErrorLogging(err);
         }

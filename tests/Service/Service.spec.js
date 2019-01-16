@@ -12,7 +12,6 @@ describe('Service Test Cases',function(){
         postRequest = sinon.stub(request,"post");
         done();
     });
-
     describe('Check Connection API',function(){
         it('Test Case 1 : When Successfull Connection',function(done){
             var response={

@@ -11,7 +11,9 @@ var message;
 var branch;
 var Announcement_NotExported = rewire('../../src/Models/Announcement.js');
 var settings;
-var localRecords;
+var cBRANCH_LEVEL=1;
+var cHALLS_LEVEL=2;
+var cCOUNTER_LEVEL=3;
 var Files =[
     {
     "language":"ar","files":[["﻿Arabic","","",""],["0","0","",""],["1","1","",""],["2","2","",""],["3","3","",""],["4","4","",""],["5","5","",""],["6","6","",""],["7","7","",""],["8","8","",""],["9","9","",""],["10","10","",""],["11","11","",""],["12","12","",""],["13","13","",""],["14","14","",""],["15","15","",""],["16","16","",""],["17","17","",""],["18","18","",""],["19","19","",""],["20","20","",""],["21","1","42","20","",""],["22","2","42","20","",""],["23","3","42","20","",""],["24","4","42","20","",""],["25","5","42","20","",""],["26","6","42","20","",""],["27","7","42","20","",""],["28","8","42","20","",""],["29","9","42","20","",""],["30","21","",""],["31","1","42","21","",""],["32","2","42","21","",""],["33","3","42","21","",""],["34","4","42","21","",""],["35","5","42","21","",""],["36","6","42","21","",""],["37","7","42","21","",""],["38","8","42","21","",""],["39","9","42","21","",""],["40","22","",""],["41","1","42","22","",""],["42","2","42","22","",""],["43","3","42","22","",""],["44","4","42","22","",""],["45","5","42","22","",""],["46","6","42","22","",""],["47","7","42","22",""],["48","8","42","22","",""],["49","9","42","22","",""],["50","23","",""],["51","1","42","23","",""],["52","2","42","23","",""],["53","3","42","23","",""],["54","4","42","23","",""],["55","5","42","23","",""],["56","6","42","23",""],["57","7","42","23","",""],["58","8","42","23","",""],["59","9","42","23","",""],["60","24","",""],["61","1","42","24","",""],["62","2","42","24","",""],["63","3","42","24",""],["64","4","42","24","",""],["65","5","42","24",""],["66","6","42","24","",""],["67","7","42","24","",""],["68","8","42","24","",""],["69","9","42","24","",""],["70","25","",""],["71","1","42","25","",""],["72","2","42","25","",""],["73","3","42","25","",""],["74","4","42","25","",""],["75","5","42","25","",""],["76","6","42","25","",""],["77","7","42","25",""],["78","8","42","25","",""],["79","9","42","25","",""],["80","26","",""],["81","1","42","26","",""],["82","2","42","26","",""],["83","3","42","26"],["84","4","42","26"],["85","5","42","26"],["86","6","42","26"],["87","7","42","26"],["88","8","42","26"],["89","9","42","26"],["90","27","",""],["91","1","42","27"],["92","2","42","27","",""],["93","3","42","27"],["94","4","42","27","",""],["95","5","42","27","",""],["96","6","42","27","",""],["97","7","42","27","",""],["98","8","42","27","",""],["99","9","42","27","",""],["100","28","",""],["101","28","42","1"],["102","28","42","2"],["103","28","42","3"],["104","28","42","4"],["105","28","42","5"],["106","28","42","6"],["107","28","42","7"],["108","28","42","8"],["109","28","42","9"],["110","28","42","10"],["111","28","42","11"],["112","28","42","12"],["113","28","42","13"],["114","28","42","14"],["115","28","42","15"],["116","28","42","16"],["117","28","42","17"],["118","28","42","18"],["119","28","42","19"],["120","28","42","20"],["121","28","42 ","1","42"," 20"],["122","28","42","2","42"," 20  "],["123","28","42","3","42"," 20 "],["124","28","42","4","42"," 20 "],["125","28","42","5","42"," 20 "],["126","28","42","6","42"," 20 "],["127","28","42","7","42"," 20 "],["128","28","42","8","42"," 20 "],["129","28","42","9","42"," 20 "],["130","28","42","21"],["131","28","42","1","42"," 21"],["132","28","42","2","42"," 21"],["133","28","42","3","42   21"],["134","28","42","4","42"," 21"],["135","28","42","5","42"," 21"],["136","28","42","6","42"," 21"],["137","28","42","7","42"," 21"],["138","28","42","8","42"," 21"],["139","28","42","9","42"," 21"],["140","28","42","40"],["141","28","42","1    42"," 22"],["142","28","42","2"," 42"," 22"],["143","28","42","3"," 42"," 22"],["144","28","42","4"," 42"," 22"],["145","28","42","5"," 42"," 22"],["146","28","42","6"," 42"," 22"],["147","28","42","7"," 42  22"],["148","28","42","8"," 42  22"],["149","28","42","9"," 42  22"],["150","28","42","23"],["151","28","42","1"," 42"," 23"],["152","28","42","2"," 42  23"],["153","28","42","3"," 42  23"],["154","28","42","4"," 42  23"],["155","28","42","5"," 42  23"],["156","28","42","6"," 42  23"],["157","28","42","7"," 42  23"],["158","28","42","8"," 42  23"],["159","28","42","9"," 42  23"],["160","28","42","24"],["161","28","42","1 "," 42  24"],["162","28","42","2 "," 42  24"],["163","28","42","3 "," 42  24"],["164","28","42","4 "," 42  24"],["165","28","42","5 "," 42  24"],["166","28","42","6 "," 42  24"],["167","28","42","7 "," 42  24"],["168","28","42","8 "," 42  24"],["169","28","42","9 "," 42  24"],["170","28","42","25"],["171","28","42","1 "," 42  25"],["172","28","42","2 "," 42  25"],["173","28","42","3 "," 42  25"],["174","28","42","4 "," 42  25"],["175","28","42","5 "," 42  25"],["176","28","42","6 "," 42  25"],["177","28","42","7 "," 42  25"],["178","28","42","8 "," 42  25"],["179","28","42","9 "," 42  25"],["180","28","42","26"],["181","28","42","1 "," 42  26"],["182","28","42","2 "," 42  26"],["183","28","42","3 "," 42  26"],["184","28","42","4 "," 42  26"],["185","28","42","5 "," 42  26"],["186","28","42","6 "," 42  26"],["187","28","42","7 "," 42  26"],["188","28","42","8 "," 42  26"],["189","28","42","9 "," 42  26"],["190","28","42","27"],["191","28","42","1 ","42"," 27"],["192","28","42","2 ","42"," 27"],["193","28","42","3 ","42"," 27"],["194","28","42","4 ","42"," 27"],["195","28","42","5 ","42 "," 27"],["196","28","42","6 ","42"," 27"],["197","28","42","7 ","42"," 27"],["198","28","42","8 ","42 "," 27"],["199","28","42","9","42 "," 27"],["200","29","",""],["201","29","42","1"],["202","29","42","2"],["203","29","42","3"],["204","29","42","4"],["205","29","42","5"],["206","29","42","6"],["207","29","42","7"],["208","29","42","8"],["209","29","42","9"],["210","29","42","10"],["211","29","42","11"],["212","29","42","12"],["213","29","42","13"],["214","29","42","14"],["215","29","42","15"],["216","29","42","16"],["217","29","42","17"],["218","29","42","18"],["219","29","42","19"],["220","29","42","20",""],["221","29","42","1","42","20"],["222","29","42","2","42","20"],["223","29","42","3","42","20"],["224","29","42","4","42","20"],["225","29","42","5","42","20"],["226","29","42","6","42","20"],["227","29","42","7","42","20"],["228","29","42","8","42","20"],["229","29","42","9","42","20"],["230","29","42","21"],["231","29","42","1","42","21"],["232","29","42","2","42","21"],["233","29","42","3","42","21"],["234","29","42","4","42","21"],["235","29","42","5","42","21"],["236","29","42","6","42","21"],["237","29","42","7","42","21"],["238","29","42","8","42","21"],["239","29","42","9","42","21"],["240","29","42","22"],["241","29","42","1","42","22"],["242","29","42","2","42","22"],["243","29","42","3","42","22"],["244","29","42","4","42","22"],["245","29","42","5","42","22"],["246","29","42","6","42","22"],["247","29","42","7","42","22"],["248","29","42","8","42","22"],["249","29","42","9","42","22"],["250","29","42","23"],["251","29","42","1","42","23"],["252","29","42","2","42","23"],["253","29","42","3","42","23"],["254","29","42","4","42","23"],["255","29","42","5","42","23"],["256","29","42","6","42","23"],["257","29","42","7","42","23"],["258","29","42","8","42","23"],["259","29","42","9","42","23"],["260","29","42","24"],["261","29","42","1","42","24"],["262","29","42","2","42","24"],["263","29","42","3","42","24"],["264","29","42","4","42","24"],["265","29","42","5","42","24"],["266","29","42","6","42","24"],["267","29","42","7","42","24"],["268","29","42","8","42","24"],["269","29","42","9","42","24"],["270","29","42","25"],["271","29","42","1","42","25"],["272","29","42","2","42","25"],["273","29","42","3","42","25"],["274","29","42","4","42","25"],["275","29","42","5","42","25"],["276","29","42","6","42","25"],["277","29","42","7","42","25"],["278","29","42","8","42","25"],["279","29","42","9","42","25"],["280","29","42","26"],["281","29","42","1","42","26"],
@@ -39,6 +41,7 @@ describe('Announcement Test Cases',function(){
     after(()=>{
         sinon.restore();
     })
+
 
     describe.skip('Start Up the Announcement ',function(){
         var temp;
@@ -80,6 +83,7 @@ describe('Announcement Test Cases',function(){
             fsReadFileAsync = sinon.stub(fs,"readFileSync");
             done();
         })
+
         it("Test Case 1 : Read All Files ",function(done){
             fsReadDir.yields(null,['Old_PAnnounce_ar.txt','PAnnounce_ar.txt','PAnnounce_en.txt','PAnnounce_fr.txt','PAnnounce_kr.txt']);
             fsReadFileAsync.returns(Files);
@@ -90,6 +94,7 @@ describe('Announcement Test Cases',function(){
                 done();
             });
         });
+
         it("Test Case 2 : Read All Files With Corrupt Directory",function(done){
             fsReadDir.yields(new Error("The Directory is Corrupted"),['Old_PAnnounce_ar.txt','PAnnounce_ar.txt','PAnnounce_en.txt','PAnnounce_fr.txt','PAnnounce_kr.txt']);
             fsReadFileAsync.returns(Files);
@@ -112,29 +117,113 @@ describe('Announcement Test Cases',function(){
                 done();
             });
         });
+
+    });
+
+    describe('Get One File Set',function(){
+        var getOneFileSet;
+        before(()=>{
+            getOneFileSet = Announcement_NotExported.__get__("getOneFileSet");
+        })
+        it('Test Case 1 : Whit Caching The All Files And Valid Language',function(done){
+            Announcement_NotExported.__set__("Files",Files);
+            getOneFileSet((result,rows)=>{
+                result.should.equal(cSUCCESS);
+                should.exist(rows);
+                done();
+            },"en")
+        });
+        it('Test Case 2 : Whit Caching The All Files And Invalid Language',function(done){
+            Announcement_NotExported.__set__("Files",Files);
+            getOneFileSet((result,rows)=>{
+                result.should.equal(cFAIL);
+                should.not.exist(rows);
+                done();
+            },"Invalid Language")
+        });
+        it('Test Case 3 : Whitout Caching The All Files And Valid Language',function(done){
+            Announcement_NotExported.__set__("Files",null);
+            getOneFileSet((result,rows)=>{
+                result.should.equal(cFAIL);
+                should.not.exist(rows);
+                done();
+            },"en")
+        });
+        it('Test Case 4 : Whitout Caching The All Files And Inalid Language',function(done){
+            Announcement_NotExported.__set__("Files",null);
+            getOneFileSet((result,rows)=>{
+                result.should.equal(cFAIL);
+                should.not.exist(rows);
+                done();
+            },"Invalid Language")
+        });
+    });
+
+    describe('Remove Empty Items from Announcement Records',function(){
+        var removeEmptyRecords;
+        before((done)=>{
+            removeEmptyRecords =  Announcement_NotExported.__get__("removeEmptyRecords");
+            done();
+        });
+        it('With Caching The Announcement Files',function(done){
+            removeEmptyRecords((result,records)=>{
+                result.should.equal(cSUCCESS);
+                should.exist(records);
+                done();
+            },Files[0].files)
+        });
+        it('Without Caching The Announcement Files',function(done){
+            removeEmptyRecords((result,records)=>{
+                result.should.equal(cFAIL);
+                should.not.exist(records);
+                done();
+            },null)
+        })
     });
 
     describe('Get Files Records',function(){
-        it("Test Case 1 : With Caching the Announcement Files and Invalid Language",function(){
-            var getRecords=Announcement_NotExported.__get__("getRecords");
-            getRecords((result,records)=>{
-                result.should.equal(cINVALID_LANGUAGE);
-            },"Invalid Language");
+        var getRecords , getOneFileSet ,removeEmptyRecords ;
+        var tempGetOneFileSet , tempRemoveEmptyRecords;
+        before((done)=>{
+            getRecords=Announcement_NotExported.__get__("getRecords");
+            tempGetOneFileSet=Announcement_NotExported.__get__("getOneFileSet");
+            tempRemoveEmptyRecords = Announcement_NotExported.__get__("removeEmptyRecords");
+            done();
         });
-        it("Test Case 2 : With Caching the Announcement Files and Valid Language",function(){
-            var getRecords=Announcement_NotExported.__get__("getRecords");
-            Announcement_NotExported.__set__("Files",Files);
+        after((done)=>{
+            Announcement_NotExported.__set__("getOneFileSet",tempGetOneFileSet);
+            Announcement_NotExported.__set__("removeEmptyRecords",tempRemoveEmptyRecords);
+            done();
+        });
+
+        it("Test Case 1 : With Caching the Announcement Files and Valid Language",function(done){
+            Announcement_NotExported.__set__("getOneFileSet",sinon.stub().yields(cSUCCESS,Files[0].files));
+            var records = Files[0].files.filter(Boolean);
+            Announcement_NotExported.__set__("removeEmptyRecords",sinon.stub().yields(cSUCCESS,records));
             getRecords((result,records)=>{
                 result.should.equal(cSUCCESS);
-                localRecords=records;
-                Announcement_NotExported.__set__("Files",null);
+                should.exist(records);
+                done();
             },"en");
         });
-        it("Test Case 3 : Without Caching the Announcement Files",function(){
-            var getRecords=Announcement_NotExported.__get__("getRecords");
+
+        it("Test Case 2 : With Caching the Announcement Files and Invalid Language",function(done){
+            Announcement_NotExported.__set__("getOneFileSet",sinon.stub().yields(cINVALID_LANGUAGE,null));
+            Announcement_NotExported.__set__("removeEmptyRecords",sinon.stub().yields(cFAIL,null));
+            getRecords((result,records)=>{
+                result.should.equal(cINVALID_LANGUAGE);
+                should.not.exist(records);
+                done();
+            },"Invalid Language");
+        });
+
+        it("Test Case 3 : Without Caching the Announcement Files",function(done){
+            Announcement_NotExported.__set__("getOneFileSet",sinon.stub().yields(cFAIL,null));
+            Announcement_NotExported.__set__("removeEmptyRecords",sinon.stub().yields(cFAIL,null));
             getRecords((result,records)=>{
                 result.should.equal(cFAIL);
                 should.not.exist(records);
+                done();
             },"en");
         });
     });
@@ -188,62 +277,385 @@ describe('Announcement Test Cases',function(){
     });
 
     describe('Get Files For A Specific Language',function(){
-        var tempGetRecords,getRecords;
-        before(()=>{
+        var tempGetRecords,getFiles;
+        before((done)=>{
             tempGetRecords = Announcement_NotExported.__get__("getRecords");
-            var stubgetRecords = sinon.stub();
-            Announcement_NotExported.__set__("getRecords",stubgetRecords);
-            getRecords= Announcement_NotExported.__get__("getRecords");
+            getFiles = Announcement_NotExported.__get__("getFiles");
+            done();
         })
-        after(()=>{
+        after((done)=>{
             Announcement_NotExported.__set__("getRecords",tempGetRecords);
+            done();
         })
-        it('Test Case 1 : Get Files When invalid langaue',function(){
-            getRecords.yields(cINVALID_LANGUAGE,null);
-            var getFiles = Announcement_NotExported.__get__("getFiles");
+        it('Test Case 1 : Get Files When invalid langaue',function(done){
+            Announcement_NotExported.__set__("getRecords",sinon.stub().yields(cINVALID_LANGUAGE,null));
             getFiles(function(result,files){
                 result.should.equal(cINVALID_LANGUAGE);
                 should.not.exist(files);
+                done();
             },{customerNumber:"A-133",counterNumber:1,language:"InvalidLanguage"})
         })
 
-        it('Test Case 2 : Get Files When Invalid Counter Number',function(){
-            getRecords.yields(cFAIL,null);
-            var getFiles = Announcement_NotExported.__get__("getFiles");
+        it('Test Case 2 : Get Files When Invalid Counter Number',function(done){
+            Announcement_NotExported.__set__("getRecords",sinon.stub().yields(cFAIL,null));
             getFiles(function(result,files){
                 result.should.equal(cFAIL);
                 should.not.exist(files);
+                done();
             },{customerNumber:"A-133",counterNumber:"Invalid Counter Number",language:"en"})
         })
 
-        it('Test Case 3 : Get Files When Invalid Customer Number',function(){
-            getRecords.yields(cFAIL,null);
-            var getFiles = Announcement_NotExported.__get__("getFiles");
+        it('Test Case 3 : Get Files When Invalid Customer Number',function(done){
+            Announcement_NotExported.__set__("getRecords",sinon.stub().yields(cFAIL,null));
             getFiles(function(result,files){
                 result.should.equal(cFAIL);
                 should.not.exist(files);
+                done();
             },{customerNumber:"A-133s",counterNumber:1,language:"en"})
         })
 
-        it('Test Case 4 : Get Files When Valid Message',function(){
-            var getFiles = Announcement_NotExported.__get__("getFiles");
-            getRecords.yields(cSUCCESS,localRecords);
+        it('Test Case 4 : Get Files When Valid Message',function(done){
+            Announcement_NotExported.__set__("getRecords",sinon.stub().yields(cSUCCESS,Files[0].files.filter(Boolean)));
             getFiles(function(result,files){
                 result.should.equal(cSUCCESS);
                 should.exist(files);
+                done();
             },{customerNumber:"A-133",counterNumber:1,language:"en"})
         })
     });
 
-    //Check it
-    describe('Filter The Broad Cast Message',function(){
-        it('Test Case 1 : Filter Message For a Same Branch',function(done){
-            var filter = Announcement_NotExported.__get__("filter");
+
+    describe('Check If The Message For Specific Branch',function(){
+        var isValidBranch;
+        before((done)=>{
+            isValidBranch = Announcement_NotExported.__get__("isValidBranch");
+            done();
+        })
+        it('Test Case 1 : With Message For The Branch',function(done){
             Announcement_NotExported.__set__("branchId",106);
-            filter(function(result,filterdMessage){
+            isValidBranch((result)=>{
+                result.should.equal(cSUCCESS);
                 done();
             },message)
+        });
+        it('Test Case 2 : With Message For The Another Branch',function(done){
+            Announcement_NotExported.__set__("branchId",100);
+            isValidBranch((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message)
+        });
+    });
+
+    describe('Check If The Message For any Hall From Specific Branch',function(){
+        var isValidHalls  , isValidBranch
+        before((done)=>{
+            Announcement_NotExported.__set__("settings",settings);
+            isValidBranch = Announcement_NotExported.__get__("isValidBranch");
+            isValidHalls = Announcement_NotExported.__get__("isValidHalls");
+            done();
+        });
+        after((done)=>{
+            Announcement_NotExported.__set__("isValidBranch",isValidBranch);
+            done();
         })
+        it('Test Case 1 : With Message For any Hall From Same Branch',function(done){
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cSUCCESS));
+            isValidHalls((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message)
+        });
+
+        it('Test Case 2 : With Message For not any Hall From Same Branch',function(done){
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cSUCCESS));
+            var tempId = message.payload.transactionsInfo[0].hall_ID;
+            message.payload.transactionsInfo[0].hall_ID=-1;
+            isValidHalls((result)=>{
+                result.should.equal(cFAIL);
+                message.payload.transactionsInfo[0].hall_ID=tempId;
+                done();
+            },message)
+        });
+
+        it('Test Case 3 : With Message For any Hall From Another Branch',function(done){
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cFAIL));
+            isValidHalls((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message)
+        });
+    });
+
+    describe('Check If The Message For any Counter From Specific Branch',function(){
+        var isValidCounters  , isValidBranch
+        before((done)=>{
+            Announcement_NotExported.__set__("settings",settings);
+            isValidBranch = Announcement_NotExported.__get__("isValidBranch");
+            isValidCounters = Announcement_NotExported.__get__("isValidCounters");
+            done();
+        });
+        after((done)=>{
+            Announcement_NotExported.__set__("isValidBranch",isValidBranch);
+            done();
+        })
+        it('Test Case 1 : With Message For any Counter From Same Branch',function(done){
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cSUCCESS));
+            isValidCounters((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message)
+        });
+
+        it('Test Case 2 : With Message For not any Counter From Same Branch',function(done){
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cSUCCESS));
+            var tempId = message.payload.transactionsInfo[0].counter_ID;
+            message.payload.transactionsInfo[0].counter_ID = -1;
+            isValidCounters((result)=>{
+                result.should.equal(cFAIL);
+                message.payload.transactionsInfo[0].counter_ID = tempId;
+                done();
+            },message)
+        });
+
+        it('Test Case 3 : With Message For any Counter From Another Branch',function(done){
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cFAIL));
+            isValidCounters((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message)
+        });
+    });
+
+    describe('Check The Message State Validity',function(){
+        var isMessage ,isValidMessage;
+        var tempMsg;
+        before((done)=>{
+            tempMsg = JSON.parse(JSON.stringify(message));
+            isMessage = Announcement_NotExported.__get__("isMessage");
+            isValidMessage =Announcement_NotExported.__get__("isValidMessage");
+            done();
+        });
+
+        after((done)=>{
+            message= JSON.parse(JSON.stringify(tempMsg));
+            Announcement_NotExported.__set__("isMessage",isMessage);
+            done();
+        });
+
+        it('Test Case 1 : If The Message Valid And Valid State',function(done){
+            Announcement_NotExported.__set__("isMessage",sinon.stub().yields(cSUCCESS));
+            isValidMessage((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message);
+        });
+
+        it('Test Case 2 : If The Message Valid And InValid State',function(done){
+            Announcement_NotExported.__set__("isMessage",sinon.stub().yields(cSUCCESS));
+            message.payload.transactionsInfo[0].state=4;
+            isValidMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+
+        it('Test Case 3 : If The Message Invalid And Valid State',function(done){
+            Announcement_NotExported.__set__("isMessage",sinon.stub().yields(cFAIL));
+            isValidMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+    });
+
+    describe('Check The Message Validity',function(){
+        var isMessage ;
+        var tempMsg;
+        before((done)=>{
+            tempMsg = JSON.parse(JSON.stringify(message));
+            isMessage = Announcement_NotExported.__get__("isMessage")
+            done();
+        });
+
+        after((done)=>{
+            message= JSON.parse(JSON.stringify(tempMsg));
+            done();
+        })
+        it('Test Case 1 : If The Message Valid And Have Transactions Info',function(done){
+            isMessage((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message);
+        });
+
+        it('Test Case 2 : If The Message Valid And Have not Transactions Info',function(done){
+            message.payload.transactionsInfo.length=0;
+            isMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+        it('Test Case 3 : If The Message Is Invalid',function(done){
+            message.payload.transactionsInfo=null;
+            isMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+    });
+
+    describe('Prepare Message',function(){
+        var tempSettings;
+        var prepareMessage;
+        var isValidMessage , isValidBranch , isValidHalls , isValidCounters;
+        before((done)=>{
+            tempSettings=settings;
+            Announcement_NotExported.__set__("settings",tempSettings);
+            prepareMessage = Announcement_NotExported.__get__("prepareMessage");
+            isValidMessage = Announcement_NotExported.__get__("isValidMessage");
+            isValidBranch = Announcement_NotExported.__get__("isValidBranch");
+            isValidHalls = Announcement_NotExported.__get__("isValidHalls");
+            isValidCounters = Announcement_NotExported.__get__("isValidCounters");
+            done();
+        });
+
+        after((done)=>{
+            Announcement_NotExported.__set__("prepareMessage",prepareMessage);
+            Announcement_NotExported.__set__("isValidMessage",isValidMessage);
+            Announcement_NotExported.__set__("isValidBranch",isValidBranch);
+            Announcement_NotExported.__set__("isValidHalls",isValidHalls);
+            Announcement_NotExported.__set__("isValidCounters",isValidCounters);
+            Announcement_NotExported.__set__("settings",tempSettings);
+            done();
+        });
+
+        it('Test Case 1 : With Valid Message , Branch Level Settings And For The Same Branch',function(done){
+            settings.level=cBRANCH_LEVEL;
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cSUCCESS));
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cSUCCESS));
+            prepareMessage((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message);
+        });
+
+        it('Test Case 2 : With Valid Message , Branch Level Settings And For The Another Branch',function(done){
+            settings.level=cBRANCH_LEVEL;
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cSUCCESS));
+            Announcement_NotExported.__set__("isValidBranch",sinon.stub().yields(cFAIL));
+            prepareMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+
+        it('Test Case 3 : With Valid Message , Halls Level Settings And For Any Hall From The Same Branch',function(done){
+            settings.level=cHALLS_LEVEL;
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cSUCCESS));
+            Announcement_NotExported.__set__("isValidHalls",sinon.stub().yields(cSUCCESS));
+            prepareMessage((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message);
+        });
+
+        it('Test Case 4 : With Valid Message , Halls Level Settings And For Not Any Hall From The Same Branch',function(done){
+            settings.level=cHALLS_LEVEL;
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cSUCCESS));
+            Announcement_NotExported.__set__("isValidHalls",sinon.stub().yields(cFAIL));
+            prepareMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+
+        it('Test Case 5 : With Valid Message , Counters Level Settings And For Any Counter From The Same Branch',function(done){
+            settings.level=cCOUNTER_LEVEL;
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cSUCCESS));
+            Announcement_NotExported.__set__("isValidCounters",sinon.stub().yields(cSUCCESS));
+            prepareMessage((result)=>{
+                result.should.equal(cSUCCESS);
+                done();
+            },message);
+        });
+
+        it('Test Case 6 : With Valid Message , Counters Level Settings And  For Not Any Counter From The Same Branch',function(done){
+            settings.level=cCOUNTER_LEVEL;
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cSUCCESS));
+            Announcement_NotExported.__set__("isValidCounters",sinon.stub().yields(cFAIL));
+            prepareMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        });
+
+        it('Test Case 7 : With Invalid Message',function(done){
+            Announcement_NotExported.__set__("isValidMessage",sinon.stub().yields(cFAIL));
+            prepareMessage((result)=>{
+                result.should.equal(cFAIL);
+                done();
+            },message);
+        })
+    });
+
+    describe('Get Sounds FileName',function(){
+        var getSoundsFileName;
+        before((done)=>{
+            Announcement_NotExported.__set__("Files",Files);
+            getSoundsFileName = Announcement_NotExported.__get__("getSoundsFileName");
+            done();
+        });
+
+        it('Test Case 1 : With Valid Filtered Message',function(done){
+            var filterdMessage = {customerNumber:"A-133",counterNumber:"1",language:"en"};
+            getSoundsFileName((fileName)=>{
+                fileName.should.equal("English");
+                done();
+            },filterdMessage);
+        });
+
+        it('Test Case 1 : With Invalid Filtered Message',function(done){
+            var filterdMessage = {customerNumber:"A-133",counterNumber:"1",language:"Invalid Language"};
+            getSoundsFileName((fileName)=>{
+                fileName.should.equal("No File");
+                done();
+            },filterdMessage);
+        });
+    });
+
+    describe('Filter The Broad Cast Message',function(){
+        var prepareMessage,filter;
+        var tempMsg;
+        before((done)=>{
+            tempMsg = JSON.parse(JSON.stringify(message));
+            Announcement_NotExported.__set__("settings",settings);
+            prepareMessage = Announcement_NotExported.__get__("prepareMessage");
+            filter = Announcement_NotExported.__get__("filter");
+            done();
+        });
+        after((done)=>{
+            message = JSON.parse(JSON.stringify(tempMsg));
+            Announcement_NotExported.__set__("prepareMessage",prepareMessage);
+            done();
+        })
+        it('Test Case 1 : With Valid Filtered Message',function(done){
+            Announcement_NotExported.__set__("prepareMessage",sinon.stub().yields(cSUCCESS));
+            filter(function(result,filterdMessage){
+                result.should.equal(cSUCCESS);
+                should.exist(filterdMessage);
+                done();
+            },message)
+        });
+
+        it('Test Case 2 : With Invalid Filtered Message',function(done){
+            Announcement_NotExported.__set__("prepareMessage",sinon.stub().yields(cFAIL));
+            filter(function(result,filterdMessage){
+                result.should.equal(cFAIL);
+                should.not.exist(filterdMessage);
+                done();
+            },message)
+        });
     });
 
     describe('Play the Announcement For a Ticket',function(){

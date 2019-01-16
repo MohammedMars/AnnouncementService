@@ -2,7 +2,7 @@ const Log=require('../../log/Log.js');
 const cSUCCESS =1;
 const cFAIL =-1;
 const cTIMEOUT=-3;
-const cPOST_MESSAGE="http://10.0.0.221:3000/PostMessage";
+const cPOST_MESSAGE="http://10.0.0.82:3000/PostMessage";
 var request = require('request');
 
 function ping(callBack,url){
