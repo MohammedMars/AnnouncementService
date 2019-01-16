@@ -53,8 +53,9 @@ socket.on('connect', function () {
   serviceState = service.CONNECTED;
   console.log('connected to https://soft-yak-62.localtunnel.me/');
   socket.on('Queuing/branchUpdates', function (message){
+    console.log("Playing Announcement Service Now");
     announcement.Play(()=>{
-      
+      console.log("Done !");
     },message);
   })
 });
