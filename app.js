@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var configurationsRouter = require('./src/Controllers/configurations.js');
 var io = require('socket.io-client');
-var socket = io.connect("https://breezy-quail-46.localtunnel.me/", {reconnection: true});
+var socket = io.connect("https://tame-lizard-49.localtunnel.me/", {reconnection: true});
 var app = express();
 var ejs = require('ejs');
 const isLocal = typeof process.pkg === 'undefined'
@@ -52,7 +52,7 @@ app.listen(Port,function(req,res){
 
 socket.on('connect', function () {
   serviceState = service.CONNECTED;
-  console.log('connected to https://breezy-quail-46.localtunnel.me/');
+  console.log('connected to https://tame-lizard-49.localtunnel.me/');
   socket.on('Queuing/branchUpdates', function (message){
     announcement.Play(()=>{
     },message);

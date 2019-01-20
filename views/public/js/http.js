@@ -7,7 +7,7 @@ var host = window.location.hostname;
 //xmlhttpRequest
 function httpConnect(callBack,serverAddress){
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://"+host+":8080/Configurations/Connection", true);
+    xhr.open('POST', "//"+host+":8080/Configurations/Connection", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.timeout=3000;
     xhr.onload = function () {
@@ -22,7 +22,7 @@ function httpConnect(callBack,serverAddress){
 
 function httpCheckIdentity(callBack,language,branchIdentity){
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', "http://"+host+":8080/Configurations/"+language+"/"+branchIdentity, true);
+    xhr.open('GET', "//"+host+":8080/Configurations/"+language+"/"+branchIdentity, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             var data =JSON.parse(this.responseText).result;
@@ -34,7 +34,7 @@ function httpCheckIdentity(callBack,language,branchIdentity){
 
 function httpChangeLanguage(callBack,language){
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', "http://"+host+":8080/Configurations/"+language, true);
+    xhr.open('GET', "//"+host+":8080/Configurations/"+language, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onload = function () {
         var result=JSON.parse(this.responseText).result;
@@ -49,7 +49,7 @@ function httpChangeLanguage(callBack,language){
 
 function httpSaveSettings(callBack,settings){
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', "http://"+host+":8080/Configurations/", true);
+    xhr.open('POST', "//"+host+":8080/Configurations/", true);
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.onload = function () {
         var result=JSON.parse(this.responseText).result;
