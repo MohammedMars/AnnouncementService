@@ -2,7 +2,7 @@ const Log=require('../../log/Log.js');
 const cSUCCESS =1;
 const cFAIL =-1;
 const cTIMEOUT=-3;
-const cPOST_MESSAGE="https://popular-moth-71.localtunnel.me/PostMessage";
+const cPOST_MESSAGE="https://breezy-quail-46.localtunnel.me/PostMessage";
 var request = require('request');
 
 function ping(callBack,url){

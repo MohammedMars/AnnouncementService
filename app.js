@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var configurationsRouter = require('./src/Controllers/configurations.js');
 var io = require('socket.io-client');
-var socket = io.connect("https://popular-moth-71.localtunnel.me/", {reconnection: true});
+var socket = io.connect("https://breezy-quail-46.localtunnel.me/", {reconnection: true});
 var app = express();
 var ejs = require('ejs');
 const isLocal = typeof process.pkg === 'undefined'
@@ -23,9 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(appDir, 'views/public')));
-
 app.use('/Configurations', configurationsRouter);
-
+var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
+// Don't redirect if the hostname is `localhost:port` or the route is `/insecure`
+app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -51,11 +52,9 @@ app.listen(Port,function(req,res){
 
 socket.on('connect', function () {
   serviceState = service.CONNECTED;
-  console.log('connected to https://popular-moth-71.localtunnel.me/');
+  console.log('connected to https://breezy-quail-46.localtunnel.me/');
   socket.on('Queuing/branchUpdates', function (message){
-    console.log("Playing Announcement Service Now");
     announcement.Play(()=>{
-      console.log("Done !");
     },message);
   })
 });
