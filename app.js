@@ -24,9 +24,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(appDir, 'views/public')));
 app.use('/Configurations', configurationsRouter);
-var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
-// Don't redirect if the hostname is `localhost:port` or the route is `/insecure`
-app.use(redirectToHTTPS([/localhost:(\d{4})/], [/\/insecure/], 301));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
