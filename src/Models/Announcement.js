@@ -22,7 +22,7 @@ var command;
 
 
     //To caching the settings and branch configurations
-    module.exports.Start=function(){
+    module.exports.Start=function(callBack){
         try{
             if(process.platform==cWindows){
                 ps = new shell({
@@ -33,12 +33,16 @@ var command;
             readSettings((result,dataSettings)=>{
                 settings=dataSettings;
                 if(settings){
-                    service.getBranch((result,branch)=>{
-                        branchId=branch.ID;
-                        readAllFiles(()=>{
-                            
-                        });
-                    },settings.branchIdentity)
+                    service.startUp((result)=>{
+                        if(result==cSUCCESS){
+                            service.getBranch((result,branch)=>{
+                                branchId=branch.ID;
+                                readAllFiles(()=>{
+                                    callBack(settings.serverAddress);
+                                });
+                            },settings.branchIdentity)
+                        }
+                    },settings)
                     
                 }else {
                     if(process.platform==cWindows){
@@ -48,7 +52,8 @@ var command;
                     }else{
                         command = "xdg-open "+cCONFIGURATION_URL;
                         LinuxShell.exec(command,{async:true},()=>{});
-                    }        
+                    }
+                    callBack(settings.serverAddress);        
                 }
             });
         }catch(err){

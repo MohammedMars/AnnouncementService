@@ -4,8 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var configurationsRouter = require('./src/Controllers/configurations.js');
+var ServerAddress;
 var io = require('socket.io-client');
-var socket = io.connect("https://pretty-firefox-79.localtunnel.me/", {reconnection: true});
+var socket = io.connect("https://swift-octopus-89.localtunnel.me/",{reconnection:true});
 var app = express();
 var ejs = require('ejs');
 const isLocal = typeof process.pkg === 'undefined'
@@ -43,13 +44,16 @@ app.use(function(err, req, res, next) {
 
 app.listen(Port,function(req,res){
   console.log("Server is Running ... ");
-  announcement.Start();
+  announcement.Start((serverAddress)=>{
+    ServerAddress=serverAddress;
+    console.log("Server Address : "+ServerAddress);
+  });
   serviceState = service.INITIALIZED;
 });
 
 socket.on('connect', function () {
   serviceState = service.CONNECTED;
-  console.log('connected to https://pretty-firefox-79.localtunnel.me/');
+  console.log('connected to '+"https://swift-octopus-89.localtunnel.me");
   socket.on('Queuing/branchUpdates', function (message){
     announcement.Play(()=>{
     },message);

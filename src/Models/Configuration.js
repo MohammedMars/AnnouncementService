@@ -161,4 +161,5 @@ var Pages;
 
     }
 
-    SetCaptions((result)=>{});
+    SetCaptions((result)=>{
+    });

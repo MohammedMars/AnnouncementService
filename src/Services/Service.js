@@ -2,11 +2,22 @@ const Log=require('../../log/Log.js');
 const cSUCCESS =1;
 const cFAIL =-1;
 const cTIMEOUT=-3;
-const cPOST_MESSAGE="https://pretty-firefox-79.localtunnel.me/PostMessage";
+var Url;
 var request = require('request');
+
+function startUp(callBack,settings){
+    try{
+        Url=settings.serverAddress;
+        callBack(cSUCCESS);
+    }catch(err){
+        Log.ErrorLogging(err);
+        callBack(cFAIL);
+    }
+}
 
 function ping(callBack,url){
     try{
+        Url =url;
         var Message = {
             time: Date.now(),
             topicName: 'ExternalData/read',
@@ -15,19 +26,25 @@ function ping(callBack,url){
                 orgid: "1"
             }
         };
-        var args ={url:url+":3000/PostMessage",json:true,body:Message};
+        var args ={url:Url+"/PostMessage",json:true,body:Message};
+        console.log(args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
                 callBack(cFAIL);
             }
-            if(response.statusCode==200){
-                callBack(cSUCCESS);
-            }else if(response.statusCode==408)
-                callBack(cTIMEOUT);
+            if(response){
+                if(response.statusCode==200){
+                    callBack(cSUCCESS);
+                }else if(response.statusCode==408)
+                    callBack(cTIMEOUT);
+            }else{
+                callBack(cFAIL);
+            }
         })
     }catch(err){
         Log.ErrorLogging(err);
+        callBack(cFAIL);
     }
 }
 
@@ -41,7 +58,8 @@ function fetchBranches(callBack){
                 orgid: "1"
             }
         };
-        var args ={url:cPOST_MESSAGE,json:true,body:Message};
+        var args ={url:Url+"/PostMessage",json:true,body:Message};
+        console.log("fetchBranches : "+args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
@@ -67,7 +85,8 @@ function fetchCounters(callBack,branchId){
                 types: ["0", "3"]
             }
         };
-        var args ={url:cPOST_MESSAGE,json:true,body:Message};
+        var args ={url:Url+"/PostMessage",json:true,body:Message};
+        console.log(args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
@@ -92,7 +111,8 @@ function fetchHalls(callBack,branchId){
                 BranchID: branchId,
             }
         };
-        var args ={url:cPOST_MESSAGE,json:true,body:Message};
+        var args ={url:Url+"/PostMessage",json:true,body:Message};
+        console.log(args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
@@ -135,6 +155,7 @@ function getBranch(callBack,branchIdentity){
 }
 
 module.exports={
+    startUp:startUp,
     ping:ping,
     fetchBranches:fetchBranches,
     fetchCounters:fetchCounters,
