@@ -66,6 +66,7 @@ emitter.on('message', function (url) {
       console.log('connected to '+url);
       socket.on('Queuing/branchUpdates', function (message){
         announcement.Play(()=>{
+          console.log("Anouncemnt Service Run On Heroku ^_^ ");
         },message);
       })
   });
