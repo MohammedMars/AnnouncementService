@@ -6,18 +6,22 @@ var host = window.location.hostname;
 
 //xmlhttpRequest
 function httpConnect(callBack,serverAddress){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', "//"+host+"/Configurations/Connection", true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.timeout=10000;
-    xhr.onload = function () {
-        var result=JSON.parse(this.responseText).result;
-        callBack(result);
-    };
-    xhr.ontimeout=function(){
-        callBack(cTIMEOUT);
+    try{
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', "//"+host+"/Configurations/Connection", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.timeout=10000;
+        xhr.onload = function () {
+            var result=JSON.parse(this.responseText).result;
+            callBack(result);
+        };
+        xhr.ontimeout=function(){
+            callBack(cTIMEOUT);
+        }
+        xhr.send(JSON.stringify({'serverAddress':serverAddress}));
+    }catch(err){
+        console.log(err);
     }
-    xhr.send(JSON.stringify({'serverAddress':serverAddress}));
 }
 
 function httpCheckIdentity(callBack,language,branchIdentity){
