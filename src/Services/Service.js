@@ -32,14 +32,15 @@ function ping(callBack,url){
             if(err){
                 Log.ErrorLogging(err);
                 callBack(cFAIL);
-            }
-            if(response){
-                if(response.statusCode==200){
-                    callBack(cSUCCESS);
-                }else if(response.statusCode==408)
-                    callBack(cTIMEOUT);
             }else{
-                callBack(cFAIL);
+                if(response){
+                    if(response.statusCode==200){
+                        callBack(cSUCCESS);
+                    }else if(response.statusCode==408)
+                        callBack(cTIMEOUT);
+                }else{
+                    callBack(cFAIL);
+                }
             }
         })
     }catch(err){
