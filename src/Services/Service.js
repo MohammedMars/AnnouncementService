@@ -4,7 +4,7 @@ const cFAIL =-1;
 const cTIMEOUT=-3;
 var Url;
 var request = require('request');
-
+var Branches;
 function startUp(callBack,settings){
     try{
         Url=settings.serverAddress;
@@ -27,7 +27,6 @@ function ping(callBack,url){
             }
         };
         var args ={url:Url+"/PostMessage",json:true,body:Message};
-        console.log(args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
@@ -51,24 +50,24 @@ function ping(callBack,url){
 
 function fetchBranches(callBack){
     try{
-        var Message = {
-            time: Date.now(),
-            topicName: 'ExternalData/read',
-            payload: {
-                EntityName: "branch",
-                orgid: "1"
-            }
-        };
-        var args ={url:Url+"/PostMessage",json:true,body:Message};
-        console.log("fetchBranches : "+args.url);
-        request.post(args,(err,response,body)=>{
-            if(err){
-                Log.ErrorLogging(err);
-                callBack(cFAIL,null);
-            }
-            var Branches=body.payload.branches;
-            callBack(cSUCCESS,Branches);
-        })
+            var Message = {
+                time: Date.now(),
+                topicName: 'ExternalData/read',
+                payload: {
+                    EntityName: "branch",
+                    orgid: "1"
+                }
+            };
+            var args ={url:Url+"/PostMessage",json:true,body:Message};
+            console.log("Branches : "+args.url);
+            request.post(args,(err,response,body)=>{
+                if(err){
+                    Log.ErrorLogging(err);
+                    callBack(cFAIL,null);
+                }
+                Branches=body.payload.branches;
+                callBack(cSUCCESS,Branches);
+            })
     }catch(err){
         Log.ErrorLogging(err);
         callBack(cFAIL,null);
@@ -87,7 +86,7 @@ function fetchCounters(callBack,branchId){
             }
         };
         var args ={url:Url+"/PostMessage",json:true,body:Message};
-        console.log(args.url);
+        console.log("Counters : "+args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
@@ -113,7 +112,7 @@ function fetchHalls(callBack,branchId){
             }
         };
         var args ={url:Url+"/PostMessage",json:true,body:Message};
-        console.log(args.url);
+        console.log("Halls ("+branchId+") : "+args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);

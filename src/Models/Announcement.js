@@ -53,7 +53,7 @@ var command;
                         command = "xdg-open "+cCONFIGURATION_URL;
                         LinuxShell.exec(command,{async:true},()=>{});
                     }
-                    callBack(settings.serverAddress);        
+                    callBack(null);        
                 }
             });
         }catch(err){

@@ -1,6 +1,7 @@
 const cSUCCESS =1;
 const cFAIL =-1;
-
+var EventEmitter = require('events');
+var emitter = new EventEmitter();
 var express = require('express');
 var router = express.Router();
 var announcement = require('../Models/Announcement.js');
@@ -47,7 +48,9 @@ function saveConfigurations(req,res){
       Config.saveSettings((result)=>{
         if(result==cSUCCESS){
           res.send({result:cSUCCESS});
-          announcement.Start();
+          announcement.Start((serverAddress)=>{
+            emitter.emit('message',serverAddress);
+          });
         }else if (result==cFAIL){
           Log.ErrorLogging("The Configuration Dose not save");
           res.send({result:cFAIL});
@@ -98,4 +101,4 @@ router.post('/Connection',checkConnections);
 //Check Branch Identity
 router.get('/:language/:branchIdentity',checkBranchIdentity);
 
-module.exports = router;
+module.exports = {router:router,emitter:emitter};
