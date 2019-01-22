@@ -3,8 +3,9 @@ const cFAIL =-1;
 const cTIMEOUT=-3;
 var host = window.location.hostname;
 
+if(host=='localhost')
+    host+=":8080";
 
-//xmlhttpRequest
 function httpConnect(callBack,serverAddress){
     try{
         var xhr = new XMLHttpRequest();

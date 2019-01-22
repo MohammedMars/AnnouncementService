@@ -1,22 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var configurationsRouter = require('./src/Controllers/configurations.js').router;
-var ServerAddress;
-var io = require('socket.io-client');
-var app = express();
-var ejs = require('ejs');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const emitter = require('./src/events.js');
+const configurationsRouter = require('./src/Controllers/configurations.js');
+const ejs = require('ejs');
 const isLocal = typeof process.pkg === 'undefined'
 const appDir = isLocal ? process.cwd() : path.dirname(process.execPath)
 const Port = process.env.PORT || 8080;
-var service={"INITIALIZED":'INITIALIZED' , "CONNECTED":'CONNECTED',"DISCONNECTED":'DISCONNECTED'};
-var serviceState="";
-var emitter = require('./src/Controllers/configurations.js').emitter;
-var fs = require('fs');
-var service = require('./src/Services/Service.js');
-var announcement = require('./src/Models/Announcement.js');
+const app = express();
 app.set('views', path.join(appDir, 'views/WebView'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
@@ -25,9 +18,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(appDir, 'views/public')));
 app.use('/Configurations', configurationsRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+    next(createError(404));
 });
 
 // error handler
@@ -41,39 +35,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-app.listen(Port,function(req,res){
+var server = app.listen(Port,function(req,res){
   try{
-  console.log("Server is Running ... ");
-  announcement.Start((serverAddress)=>{
-      ServerAddress=serverAddress;
-      if(serverAddress){
-        emitter.emit('message',serverAddress);
-      }
-
-    });
-  serviceState = service.INITIALIZED;
+      console.log("Server is Running ... ");
+      emitter.emit('Start',"Starting The Announcemet Service");
+      console.log("Server Ip Address is : "+server.address().address);
   }
   catch(err){
     console.log(err);
   }
-});
-
-emitter.on('message', function (url) {
-  var socket = io.connect(url,{reconnection:true});
-  socket.on('connect', function () {
-      serviceState = service.CONNECTED;
-      console.log('connected to '+url);
-      socket.on('Queuing/branchUpdates', function (message){
-        announcement.Play(()=>{
-          console.log("Anouncemnt Service Run On Heroku ^_^ ");
-        },message);
-      })
-  });
-  socket.on('disconnect',function(){
-      serviceState = service.DISCONNECTED;
-      console.log("Disconnecting")
-  });
 })
 
 module.exports = app;

@@ -12,27 +12,49 @@ var settings;
 var branchId;
 var cCONFIGURATION_URL="http://localhost:8080/Configurations";
 var service=require('../Services/Service.js');
-var cFIRST_STATEMENT="Statement01";
-var cSECOND_STATEMENT="Statement02";
-var cWindows="win32";
-var cBRANCH_LEVEL=1;
-var cHALLS_LEVEL=2;
-var cCOUNTER_LEVEL=3;
+const cFIRST_STATEMENT="Statement01";
+const cSECOND_STATEMENT="Statement02";
+const cWindows="win32";
+const cLINUX ="linux";
+const cBRANCH_LEVEL=1;
+const cHALLS_LEVEL=2;
+const cCOUNTER_LEVEL=3;
 var command;
 
+
+    module.exports.setConfigurations=function(){
+        try{
+            if(process.platform==cWindows){
+                if(ps==null){
+                    ps = new shell({
+                        executionPolicy: 'Bypass',
+                        noProfile: true
+                    });
+                }
+                command = "explorer '"+cCONFIGURATION_URL+"'";
+                ps.addCommand(command);
+                ps.invoke();
+            }else if(process.platform==cLINUX){
+                command = "xdg-open "+cCONFIGURATION_URL;
+                LinuxShell.exec(command,{async:true},()=>{});
+            }
+        }catch(err){
+            Log.ErrorLogging(err);
+        }
+    }
 
     //To caching the settings and branch configurations
     module.exports.Start=function(callBack){
         try{
-            if(process.platform==cWindows){
+            if(process.platform==cWindows && ps==null){
                 ps = new shell({
                     executionPolicy: 'Bypass',
                     noProfile: true
                     });
             }
             readSettings((result,dataSettings)=>{
-                settings=dataSettings;
-                if(settings){
+                if(result==cSUCCESS){
+                    settings=dataSettings;
                     service.startUp((result)=>{
                         if(result==cSUCCESS){
                             service.getBranch((result,branch)=>{
@@ -42,18 +64,9 @@ var command;
                                 });
                             },settings.branchIdentity)
                         }
-                    },settings)
-                    
-                }else {
-                    if(process.platform==cWindows){
-                        command = "explorer '"+cCONFIGURATION_URL+"'";
-                        ps.addCommand(command);
-                        ps.invoke();
-                    }else{
-                        command = "xdg-open "+cCONFIGURATION_URL;
-                        LinuxShell.exec(command,{async:true},()=>{});
-                    }
-                    callBack(null);        
+                    },settings)       
+                }else if(result==cFAIL){
+                    callBack(null); 
                 }
             });
         }catch(err){
