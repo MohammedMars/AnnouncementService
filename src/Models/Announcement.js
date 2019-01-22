@@ -58,11 +58,17 @@ var command;
                     service.startUp((result)=>{
                         if(result==cSUCCESS){
                             service.getBranch((result,branch)=>{
-                                branchId=branch.ID;
-                                readAllFiles(()=>{
-                                    callBack(settings.serverAddress);
-                                });
+                                if(result==cSUCCESS){
+                                    branchId=branch.ID;
+                                    readAllFiles(()=>{
+                                        callBack(settings.serverAddress);
+                                    });
+                                }else{
+                                    callBack(null); 
+                                }
                             },settings.branchIdentity)
+                        }else if(result==cFAIL){
+                            callBack(null); 
                         }
                     },settings)       
                 }else if(result==cFAIL){

@@ -6,7 +6,6 @@ const logger = require('morgan');
 const emitter = require('./src/events.js');
 const configurationsRouter = require('./src/Controllers/configurations.js');
 const ejs = require('ejs');
-const os = require('os');
 const isLocal = typeof process.pkg === 'undefined'
 const appDir = isLocal ? process.cwd() : path.dirname(process.execPath)
 const Port = process.env.PORT || 8080;
@@ -36,9 +35,9 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var server =app.listen(Port,function(req,res){
+var server = app.listen(Port,function(req,res){
   try{
-      console.log("Server is Running ... "+os.hostname());
+      console.log("Server is Running ... ");
       emitter.emit('Start',"Starting The Announcemet Service");
   }
   catch(err){
@@ -46,4 +45,4 @@ var server =app.listen(Port,function(req,res){
   }
 })
 
-module.exports = app;
+module.exports = app

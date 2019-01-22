@@ -43,36 +43,61 @@ describe('Announcement Test Cases',function(){
     })
 
 
-    describe.skip('Start Up the Announcement ',function(){
-        var temp;
+    describe('Start Up the Announcement ',function(){
+        var tempReadSettings,tempReadAllFiles;
+        var startUp,getBranch;
         before((done)=>{
-            temp = Announcement_NotExported.__get__("readSettings");
+            Announcement_NotExported.__set__("ps",{});
+            tempReadSettings = Announcement_NotExported.__get__("readSettings");
+            tempReadAllFiles = Announcement_NotExported.__get__("readAllFiles");
+            startUp = sinon.stub(service,"startUp")
+            getBranch =sinon.stub(service,"getBranch");
             done();
         });
         after((done)=>{
-            Announcement_NotExported.__set__("readSettings",temp);
+            Announcement_NotExported.__set__("readSettings",tempReadSettings);
+            Announcement_NotExported.__set__("readAllFiles",tempReadAllFiles);
+            service.startUp.restore();
+            service.getBranch.restore();
             done();
         })
         it('Test Case 1 : Normal Start With Settings',function(done){
-            var stubReadSettings = sinon.stub().yields(cSUCCESS,settings);
-            Announcement_NotExported.__set__("readSettings",stubReadSettings);
-            var getBranch = sinon.stub(service,"getBranch");
-            getBranch.withArgs("MAJD").yields(cSUCCESS,branch);
-            Announcement_NotExported.Start();
-            var Files = Announcement_NotExported.__get__("Files");
-            var Settings =Announcement_NotExported.__get__("settings");
-            should.exist(Files);
-            should.exist(Settings);
-            done();
+            Announcement_NotExported.__set__('readSettings',sinon.stub().yields(cSUCCESS,settings));
+            Announcement_NotExported.__set__('readAllFiles',sinon.stub().yields());
+            startUp.yields(cSUCCESS);
+            getBranch.yields(cSUCCESS,branch);
+            Announcement_NotExported.Start((serverAddress)=>{
+                should.exist(serverAddress);
+                serverAddress.should.equal(settings.serverAddress);
+                done();
+            });
         });
 
-        it('Test Case 2 : Normal Start Without Settings',function(done){
-            var stubReadSettings = sinon.stub().yields(cFAIL,null);
-            Announcement_NotExported.__set__("readSettings",stubReadSettings);
-            Announcement_NotExported.Start();
-            var Command = Announcement_NotExported.__get__("command");
-            should.exist(Command);
-            done();
+        it("Test Case 2 : Normal Start With Settings and Can't Start Up The Configuraions",function(done){
+            Announcement_NotExported.__set__('readSettings',sinon.stub().yields(cSUCCESS,settings));
+            startUp.yields(cFAIL);
+            Announcement_NotExported.Start((serverAddress)=>{
+                should.not.exist(serverAddress);
+                done();
+            });
+        });
+
+        it("Test Case 3 : Normal Start With Settings and Can't Get The Branch Info",function(done){
+            Announcement_NotExported.__set__('readSettings',sinon.stub().yields(cSUCCESS,settings));
+            startUp.yields(cSUCCESS);
+            getBranch.yields(cFAIL,null);
+            Announcement_NotExported.Start((serverAddress)=>{
+                should.not.exist(serverAddress);
+                done();
+            });
+        });
+
+        it("Test Case 4 : Normal Start Without Settings ",function(done){
+            Announcement_NotExported.__set__('readSettings',sinon.stub().yields(cFAIL,null));
+            Announcement_NotExported.Start((serverAddress)=>{
+                should.not.exist(serverAddress);
+                done();
+            });
         });
     });
 
@@ -323,7 +348,6 @@ describe('Announcement Test Cases',function(){
             },{customerNumber:"A-133",counterNumber:1,language:"en"})
         })
     });
-
 
     describe('Check If The Message For Specific Branch',function(){
         var isValidBranch;

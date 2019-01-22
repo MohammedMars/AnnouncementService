@@ -7,8 +7,12 @@ var request = require('request');
 var Branches;
 function startUp(callBack,settings){
     try{
-        Url=settings.serverAddress;
-        callBack(cSUCCESS);
+        if(settings){
+            Url=settings.serverAddress;
+            callBack(cSUCCESS);
+        }else{
+            callBack(cFAIL);
+        }
     }catch(err){
         Log.ErrorLogging(err);
         callBack(cFAIL);
@@ -59,7 +63,6 @@ function fetchBranches(callBack){
                 }
             };
             var args ={url:Url+"/PostMessage",json:true,body:Message};
-            console.log("Branches : "+args.url);
             request.post(args,(err,response,body)=>{
                 if(err){
                     Log.ErrorLogging(err);
@@ -86,7 +89,6 @@ function fetchCounters(callBack,branchId){
             }
         };
         var args ={url:Url+"/PostMessage",json:true,body:Message};
-        console.log("Counters : "+args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);
@@ -112,7 +114,6 @@ function fetchHalls(callBack,branchId){
             }
         };
         var args ={url:Url+"/PostMessage",json:true,body:Message};
-        console.log("Halls ("+branchId+") : "+args.url);
         request.post(args,(err,response,body)=>{
             if(err){
                 Log.ErrorLogging(err);

@@ -12,6 +12,28 @@ describe('Service Test Cases',function(){
         postRequest = sinon.stub(request,"post");
         done();
     });
+
+    describe('Start Up',function(){
+        var settings ;
+        before((done)=>{
+            settings ={"serverAddress":"http://localhost","branchIdentity":"MAJD","halls":[{"ID":838,"Name_L1":"Hall 1","Name_L2":"Hall 1","Name_L3":"Hall 1","Name_L4":"Hall 1","Color":"#000000","GuidingText_L1":null,"GuidingText_L2":null,"GuidingText_L3":null,"GuidingText_L4":null},{"ID":842,"Name_L1":"Hall 3","Name_L2":"قاعة 3","Name_L3":"Hall 3","Name_L4":"","Color":"#000000","GuidingText_L1":null,"GuidingText_L2":null,"GuidingText_L3":null,"GuidingText_L4":null},{"ID":878,"Name_L1":"hall2","Name_L2":"hall2","Name_L3":"hall2","Name_L4":"","Color":"#000000","GuidingText_L1":null,"GuidingText_L2":null,"GuidingText_L3":null,"GuidingText_L4":null}],"counters":[{"ID":122,"Name_L1":"Counter 3 No call","Name_L2":"Counter 3 No call","Name_L3":"Counter 3 No call","Name_L4":"","Number":3},{"ID":605,"Name_L1":"Counter 5","Name_L2":"Counter 5","Name_L3":"Counter 5","Name_L4":"","Number":5},{"ID":606,"Name_L1":"Counter 6","Name_L2":"Counter 6","Name_L3":"Counter 6","Name_L4":"","Number":6},{"ID":607,"Name_L1":"Counter 7","Name_L2":"Counter 7","Name_L3":"Counter 7","Name_L4":"","Number":7},{"ID":608,"Name_L1":"Counter 8","Name_L2":"Counter 8","Name_L3":"Counter 8","Name_L4":"","Number":8},{"ID":609,"Name_L1":"Counter 9","Name_L2":"Counter 9","Name_L3":"Counter 9","Name_L4":"","Number":9},{"ID":610,"Name_L1":"Counter 10","Name_L2":"Counter 10","Name_L3":"Counter 10","Name_L4":"","Number":10},{"ID":611,"Name_L1":"Counter 11","Name_L2":"Counter 11","Name_L3":"Counter 11","Name_L4":"","Number":11},{"ID":120,"Name_L1":"Counter 1","Name_L2":"النافذة 1","Name_L3":"Counter 1","Name_L4":"","Number":1},{"ID":121,"Name_L1":"Counter 2","Name_L2":"النافذة 2","Name_L3":"Counter 2","Name_L4":"","Number":2},{"ID":120,"Name_L1":"Counter 1","Name_L2":"النافذة 1","Name_L3":"Counter 1","Name_L4":"","Number":1},{"ID":121,"Name_L1":"Counter 2","Name_L2":"النافذة 2","Name_L3":"Counter 2","Name_L4":"","Number":2}],"level":1}
+            done();
+        });
+
+        it('Test Case 1 : With Settings',function(done){
+            Service.startUp((result)=>{
+                result.should.equal(cSUCCESS);
+            },settings);
+            done();
+        });
+        it('Test Case 2 : With Settings',function(done){
+            Service.startUp((result)=>{
+                result.should.equal(cFAIL);
+            },null);
+            done();
+        })
+    })
+
     describe('Check Connection API',function(){
         it('Test Case 1 : When Successfull Connection',function(done){
             var response={
