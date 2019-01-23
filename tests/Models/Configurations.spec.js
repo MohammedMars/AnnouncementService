@@ -116,32 +116,35 @@ describe('Configurations Test Cases',function(){
     });
     
     describe('Fetch And Cache  All The Branches',function(){
-        it('Test Case 1 : Fetch And Cache  All The Branches',function(){
-            sinon.stub(service,"fetchBranches").yields({branches : []});
+        it('Test Case 1 : Fetch And Cache  All The Branches',function(done){
+            sinon.stub(service,"fetchBranches").yields(cSUCCESS,{branches : []});
             var fetchBranches = Announcement_NotExported.__get__("fetchBranches");
             fetchBranches((result,branches)=>{
                 result.should.equal(cSUCCESS);
                 should.exist(branches);
+                done();
             })
         });
     });
     
     describe('Fetch And Cache  All The Halls',function(){
-        it('Test Case 1 : Fetch And Cache  All The Halls',function(){
-            sinon.stub(service,"fetchHalls").yields({halls : []});
+        it('Test Case 1 : Fetch And Cache  All The Halls',function(done){
+            sinon.stub(service,"fetchHalls").yields(cSUCCESS,{halls : []});
             var fetchHalls = Announcement_NotExported.__get__("fetchHalls");
             fetchHalls((result)=>{
                 result.should.equal(cSUCCESS);
+                done();
             })
         })
     });
     
     describe('Fetch And Cache  All The Counters',function(){
-        it('Test Case 1 : Fetch And Cache  All The Counters',function(){
-            sinon.stub(service,"fetchCounters").yields({counters : []});
+        it('Test Case 1 : Fetch And Cache  All The Counters',function(done){
+            sinon.stub(service,"fetchCounters").yields(cSUCCESS,{counters : []});
             var fetchCounters = Announcement_NotExported.__get__("fetchCounters");
             fetchCounters((result)=>{
                 result.should.equal(cSUCCESS);
+                done();
             })
         });
     });

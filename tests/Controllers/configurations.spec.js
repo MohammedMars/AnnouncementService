@@ -187,7 +187,8 @@ describe('Configurations Controller Test Cases',function(){
         before((done)=>{
             fetchSettings=sinon.stub(Settings.prototype,"fetchSettings");
             done();
-        })
+        });
+        
         it('When Valid Branch Identity',function(){
             fetchSettings.yields(cSUCCESS);
             var checkBranchIdentity = ConfigController.__get__("checkBranchIdentity");
@@ -203,6 +204,7 @@ describe('Configurations Controller Test Cases',function(){
             res.send.firstCall.args[0].fetchingResult.should.equal(cSUCCESS);
             should.exist(res.send.firstCall.args[0].result);
         });
+
         it('When Invalid Branch Identity',function(){
             fetchSettings.yields(cFAIL);
             var checkBranchIdentity = ConfigController.__get__("checkBranchIdentity");
@@ -219,4 +221,5 @@ describe('Configurations Controller Test Cases',function(){
             should.not.exist(res.send.firstCall.args[0].result);
         });
     });
+
 });

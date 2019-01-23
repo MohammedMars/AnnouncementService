@@ -70,7 +70,7 @@ var Pages;
         try{
             service.fetchBranches((result,branches)=>{
                 Branches=branches;
-                callBack(cSUCCESS,Branches);
+                callBack(result,Branches);
             })
         }catch(err){
             Log.ErrorLogging(err);
@@ -83,7 +83,7 @@ var Pages;
         try{
             service.fetchCounters((result,counters)=>{
                 Counters=counters;
-                callBack(cSUCCESS,Counters);
+                callBack(result,Counters);
             },branchId)
         }catch(err){
             Log.ErrorLogging(err);
@@ -96,7 +96,7 @@ var Pages;
         try{
             service.fetchHalls((result,halls)=>{
                 Halls=halls;
-                callBack(cSUCCESS,Halls);
+                callBack(result,Halls);
             },branchId)
         }catch(err){
             Log.ErrorLogging(err);

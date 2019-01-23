@@ -46,11 +46,11 @@ module.exports = class Settings{
                                 this.counters=counters
                                 callBack(cSUCCESS)
                             }else{
-                                callBack(cFAIL)
+                                callBack(cREFUSECONNECTION)
                             }
                         },branch.ID)
                     }else{
-                        callBack(cFAIL)
+                        callBack(cREFUSECONNECTION)
                     }
                 },branch.ID)
             }else if(result==cFAIL){

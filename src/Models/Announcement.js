@@ -451,9 +451,11 @@ var command;
                     //Stop
                 }
             }).catch((error) => {
+                console.log("Internal Error");
                 Log.ErrorLogging(error);
             });
         }catch(err){
+            console.log("Internal Error");
             Log.ErrorLogging(error);
         }
     }

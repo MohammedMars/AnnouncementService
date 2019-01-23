@@ -29,7 +29,7 @@
     "connectionCheck7":"Connecting",
     "IdentityCheck1":"Invalid Branch Identity",
     "IdentityCheck2":"Please fill the Branch Identity",
-    "IdentityCheck3":"Refuse Connection",
+    "IdentityCheck3":"Connection Refused",
     "endPageSubTitle":"Well Done !",
     "endPageMessage":"You successfully save the announcement settings",
     "endPageButton1":"BACK",

@@ -1,0 +1,35 @@
+[object Object],[object Object],[object Object],[object Object]
+Wed Jan 23 2019 16:51:21 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+AssertionError: expected 1 to equal -1
+-------------------------------------
+
+Wed Jan 23 2019 16:51:21 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+Error: Can't find the path
+-------------------------------------
+
+Wed Jan 23 2019 16:51:21 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+Error: Invalid Url
+-------------------------------------
+
+Wed Jan 23 2019 16:51:21 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+Error: Can't Fetching The Branches
+-------------------------------------
+
+Wed Jan 23 2019 16:51:21 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+Error: Can't Fetching The Counters
+-------------------------------------
+
+Wed Jan 23 2019 16:51:21 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+Error: Can't Fetching The Halls
+-------------------------------------
+
+Wed Jan 23 2019 16:52:26 GMT+0200 (Eastern European Standard Time)
+-------------------------------------
+Error: connect ETIMEDOUT 138.197.63.247:443
+-------------------------------------
