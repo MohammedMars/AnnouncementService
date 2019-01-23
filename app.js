@@ -37,10 +37,6 @@ app.use(function(err, req, res, next) {
 
 app.listen(Port,function(req,res){
   try{
-      var os = require('os');
-      console.log(os.type());
-      console.log(os.release()); 
-      console.log(os.platform());
       console.log("Server is Running ... ");
       emitter.emit('Start',"Starting The Announcemet Service");
   }
