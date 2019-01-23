@@ -5,6 +5,7 @@ var request = require('request');
 const cSUCCESS=1;
 const cFAIL=-1;
 const cTIMEOUT=-3;
+const cREFUSECONNECTION=-4;
 const Service = require('../../src/Services/Service');
 describe('Service Test Cases',function(){
     var postRequest;
@@ -603,7 +604,7 @@ describe('Service Test Cases',function(){
         it("Test Case 3 : when Can't Fetching Branches",function(done){
             fetchBranches.yields(cFAIL,null);
             Service.getBranch(function(result,branch){
-                result.should.equal(cFAIL);
+                result.should.equal(cREFUSECONNECTION);
                 should.not.exist(branch);
                 done();
             },"Invalid Branch Identity")
