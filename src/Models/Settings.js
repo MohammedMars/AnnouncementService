@@ -1,6 +1,7 @@
 var service=require('../Services/Service.js');
 const cSUCCESS =1;
 const cFAIL =-1;
+const cREFUSECONNECTION=-4;
 module.exports = class Settings{
 
     constructor(){
@@ -52,8 +53,10 @@ module.exports = class Settings{
                         callBack(cFAIL)
                     }
                 },branch.ID)
-            }else{
+            }else if(result==cFAIL){
                 callBack(cFAIL)
+            }else{
+                callBack(cREFUSECONNECTION);
             }
         },branchIdentity)
     }

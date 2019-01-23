@@ -12,8 +12,13 @@
                     <!-- Server Address -->
                     <div class="md-form form-lg">
                         <input type="text" id="serverAddress" class="form-control" style="font-size: 15px;" placeholder='<%=page.firstInput%>'>
-                        <label></label>
-                        <p id="connectionState" style="color: red" class="form-text text-muted mb-4"></p>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <p id="connectionState" style="color: red; display: inline;" class="form-text text-muted mb-4"></p>
+                                <img id="loadingImage" style="display: none" src="/img/loading.gif" alt="" width="100px;" height="40px;">
+                            </div>
+                        </div>
                     </div>
                     </div>
                     </div>
@@ -22,7 +27,8 @@
                     <div class="form-row">
                     <div class="col">
                         <div class="md-form form-lg">
-                            <input type="text" id="branchIdentity" class="form-control"  style="font-size: 15px;"  placeholder='<%=page.secondInput%>'>
+                            <input type="text" id="branchIdentity" class="form-control"  style="font-size: 15px;"  placeholder='<%=page.secondInput%>' onkeyup="Enter">
+                            <img id="loadingImage2" style="display: none" src="/img/loading.gif" alt="" width="100px;" height="40px;">
                             <p id="identityValidation"  style="color: red" class="form-text text-muted mb-4"></p>
                         </div>
                     </div>
@@ -31,7 +37,7 @@
                     <div class="row">
                     <div class="col-md-10 col-sm-10"></div>
                     <div class="col-md-2 col-sm-2">
-                    <button type="button" onclick="connect()" style="width: 100px; font-size: 12px" class="btn btn-primary btn-rounded"><%=page.firstButton%></button>
+                    <button type="button" id="myBtn" onclick="connect()" style="width: 100px; font-size: 12px" class="btn btn-primary btn-rounded"><%=page.firstButton%></button>
                     </div>
                     </div>
 

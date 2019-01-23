@@ -1,6 +1,7 @@
 const cSUCCESS =1;
 const cFAIL =-1;
 const cTIMEOUT=-3;
+const cREFUSECONNECTION=-4;
 var host = window.location.hostname;
 
 if(host=='localhost')
@@ -11,7 +12,6 @@ function httpConnect(callBack,serverAddress){
         var xhr = new XMLHttpRequest();
         xhr.open('POST', "//"+host+"/Configurations/Connection", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.timeout=10000;
         xhr.onload = function () {
             var result=JSON.parse(this.responseText).result;
             callBack(result);

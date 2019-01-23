@@ -18,20 +18,21 @@ var connectionCheck3;
 var connectionCheck4;
 var connectionCheck5;
 var connectionCheck6;
+var connectionCheck7;
 var IdentityCheck1;
 var IdentityCheck2;
 
-function start(){
-
+function loadingDataAndEvent(){
     connectionCheck1=document.getElementById('connectionCheck1').innerHTML;
     connectionCheck2=document.getElementById('connectionCheck2').innerHTML;
     connectionCheck3=document.getElementById('connectionCheck3').innerHTML;
     connectionCheck4=document.getElementById('connectionCheck4').innerHTML;
     connectionCheck5=document.getElementById('connectionCheck5').innerHTML;
     connectionCheck6=document.getElementById('connectionCheck6').innerHTML;
+    connectionCheck7=document.getElementById('connectionCheck7').innerHTML;
     IdentityCheck1=document.getElementById('IdentityCheck1').innerHTML;
     IdentityCheck2=document.getElementById('IdentityCheck2').innerHTML;
-    
+    IdentityCheck3=document.getElementById('IdentityCheck3').innerHTML;
     language=document.getElementById('pageLanguage').innerHTML;
     var options =document.getElementById('language').options;
     for(var i=0;i<options.length;i++){
@@ -40,6 +41,24 @@ function start(){
             break;
         }
     }
+    var input = document.getElementById("branchIdentity");
+    input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("myBtn").click();
+    }
+    });
+    var input2 = document.getElementById("serverAddress");
+    input2.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("myBtn").click();
+    }
+    });
+}
+
+function start(){
+    loadingDataAndEvent();
     var radio1 = document.getElementById('allHalls');
     var radio2 = document.getElementById('specificHalls');
     var radio3 = document.getElementById('specificCounters');
@@ -62,7 +81,8 @@ function start(){
 
 function connect(){
     isConnect=false;
-    document.getElementById('connectionState').innerHTML=connectionCheck2;
+    document.getElementById('connectionState').innerHTML=connectionCheck7;
+    document.getElementById('loadingImage').style.display="inline";
     var serverAddress =document.getElementById('serverAddress').value;
     if(serverAddress.length>0){
         if(isVaildHostName(serverAddress) || serverAddress=="http://localhost"){
@@ -78,18 +98,22 @@ function connect(){
                     document.getElementById('connectionState').innerHTML=connectionCheck4;
                     isConnect=false;
                 }
+                document.getElementById('loadingImage').style.display="none";
             },serverAddress);
         }else{
             document.getElementById('connectionState').innerHTML=connectionCheck5;
+            document.getElementById('loadingImage').style.display="none";
         }
     }else{
         document.getElementById('connectionState').innerHTML=connectionCheck6;
+        document.getElementById('loadingImage').style.display="none";
     }
 }
 
 function checkIdentity(){
     var branchIdentity =document.getElementById('branchIdentity').value;
     var identityValidation=document.getElementById('identityValidation');
+    document.getElementById('loadingImage2').style.display="inline";
     identityValidation.innerHTML="";
     if(branchIdentity.length>0){
         document.getElementById('allHalls').checked=true;
@@ -112,22 +136,26 @@ function checkIdentity(){
                 branch=null;
                 fillCounters();
                 fillHalls();
-                identityValidation.innerHTML=IdentityCheck1;
                 vaildBranchIdentity=false;
                 document.getElementById('specificHalls').disabled=true;
                 document.getElementById('specificCounters').disabled=true;
+                if(fetchingResult==cFAIL){
+                    identityValidation.innerHTML=IdentityCheck1;
+                }else if(fetchingResult==cREFUSECONNECTION){
+                    identityValidation.innerHTML=IdentityCheck3;
+                }
             }
+            document.getElementById('loadingImage2').style.display="none";
         },language,branchIdentity)
     }else{
         identityValidation.innerHTML=IdentityCheck2;
+        document.getElementById('loadingImage2').style.display="none";
     }
 }
 
 function isVaildHostName(Hostname){
-    var prefix = Hostname.substring(0,7);
-    Hostname = Hostname.substring(7);
-
-    return true;
+    var regex = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|www\\.){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+    return regex.test(Hostname);
 }
 
 function fillCounters(){
@@ -299,5 +327,4 @@ function Back(){
     document.getElementById('mainView').style.display="block";
     document.getElementById('endPage').style.display="none";
 }
-
 window.addEventListener('load',start,false);

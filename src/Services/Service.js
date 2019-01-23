@@ -2,6 +2,7 @@ const Log=require('../../log/Log.js');
 const cSUCCESS =1;
 const cFAIL =-1;
 const cTIMEOUT=-3;
+const cREFUSECONNECTION=-4;
 var Url;
 var request = require('request');
 var Branches;
@@ -67,9 +68,14 @@ function fetchBranches(callBack){
                 if(err){
                     Log.ErrorLogging(err);
                     callBack(cFAIL,null);
+                }else{
+                    if(body && body.payload){
+                        Branches=body.payload.branches;
+                        callBack(cSUCCESS,Branches);
+                    }else{
+                        callBack(cFAIL,null);
+                    }
                 }
-                Branches=body.payload.branches;
-                callBack(cSUCCESS,Branches);
             })
     }catch(err){
         Log.ErrorLogging(err);
@@ -93,9 +99,14 @@ function fetchCounters(callBack,branchId){
             if(err){
                 Log.ErrorLogging(err);
                 callBack(cFAIL,null);
+            }else{
+                if(body && body.payload){
+                    var Counters=body.payload.counters;
+                    callBack(cSUCCESS,Counters);
+                }else{
+                    callBack(cFAIL,null);
+                }
             }
-            var Counters=body.payload.counters;
-            callBack(cSUCCESS,Counters);
         })
     }catch(err){
         Log.ErrorLogging(err);
@@ -118,9 +129,14 @@ function fetchHalls(callBack,branchId){
             if(err){
                 Log.ErrorLogging(err);
                 callBack(cFAIL,null);
+            }else{
+                if(body && body.payload){
+                    var Halls=body.payload.halls;
+                    callBack(cSUCCESS,Halls);
+                }else{
+                    callBack(cFAIL,null);
+                }
             }
-            var Halls=body.payload.halls;
-            callBack(cSUCCESS,Halls);
         })
     }catch(err){
         Log.ErrorLogging(err);
@@ -147,7 +163,7 @@ function getBranch(callBack,branchIdentity){
                     callBack(cFAIL,null);
                 }
             }else{
-                callBack(cFAIL,null);
+                callBack(cREFUSECONNECTION,null);
             }
         })
     }catch(err){

@@ -35,7 +35,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-var server = app.listen(Port,function(req,res){
+app.listen(Port,function(req,res){
   try{
       console.log("Server is Running ... ");
       emitter.emit('Start',"Starting The Announcemet Service");
