@@ -85,7 +85,7 @@ function connect(){
     document.getElementById('loadingImage').style.display="inline";
     var serverAddress =document.getElementById('serverAddress').value;
     if(serverAddress.length>0){
-        if(isVaildHostName(serverAddress) || serverAddress=="http://localhost"){
+        if(isVaildHostName(serverAddress) || serverAddress=="http://localhost:3000"){
             httpConnect((result)=>{
                 if(result==cSUCCESS){
                     document.getElementById('connectionState').innerHTML=connectionCheck1;

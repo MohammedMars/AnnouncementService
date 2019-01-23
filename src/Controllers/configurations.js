@@ -28,7 +28,7 @@ function ChangePageLanguage (req, res) {
     language= req.params.language;
     Config.getPage((result)=>{
       if(result==cSUCCESS)
-         res.send({result:result});
+        res.send({result:result});
       else if(result==cFAIL){
         Log.ErrorLogging("Can't Find the Language");
          res.send({result:result});

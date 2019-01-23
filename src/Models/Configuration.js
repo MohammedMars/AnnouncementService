@@ -68,7 +68,7 @@ var Pages;
     //Caching all the branches  
     function fetchBranches(callBack){
         try{
-            service.fetchBranches((branches)=>{
+            service.fetchBranches((result,branches)=>{
                 Branches=branches;
                 callBack(cSUCCESS,Branches);
             })
@@ -81,7 +81,7 @@ var Pages;
     //Caching all the counters for specific branch
     function fetchCounters(callBack,branchId){
         try{
-            service.fetchCounters((counters)=>{
+            service.fetchCounters((result,counters)=>{
                 Counters=counters;
                 callBack(cSUCCESS,Counters);
             },branchId)
@@ -94,7 +94,7 @@ var Pages;
     //Caching all the halls for specific branch
     function fetchHalls(callBack,branchId){
         try{
-            service.fetchHalls((halls)=>{
+            service.fetchHalls((result,halls)=>{
                 Halls=halls;
                 callBack(cSUCCESS,Halls);
             },branchId)
@@ -107,7 +107,7 @@ var Pages;
     //Fetch the specific branch info and his counters and halls
     module.exports.fetchData=function(callBack,branchIdentity){
         try{
-            fetchBranches((branches)=>{
+            fetchBranches((result,branches)=>{
                 getBranch((result,branch)=>{
                     if(result==cSUCCESS){
                         fetchHalls(()=>{
