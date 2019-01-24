@@ -439,7 +439,7 @@ var command;
     }
 
     //Announce a filtered message for Linux or mac platform
-    function play_XOS(file,index,SoundsFileName){
+    function play_XOS(files,index,SoundsFileName){
         try{
             command = "aplay "+'./sounds/'+SoundsFileName+'/'+files[index++]+'.wav';
             LinuxShell.exec(command,{async:true},()=>{
@@ -450,7 +450,6 @@ var command;
                 }
             });
         }catch(err){
-            console.log("Internal Error");
             Log.ErrorLogging(error);
         }
     }
