@@ -2,7 +2,6 @@ const Log=require('../../log/Log.js');
 const cSUCCESS =1;
 const cFAIL =-1;
 const cINVALID_LANGUAGE=-2;
-const player = require('node-wav-player');
 const shell = require('node-powershell');
 var ps;
 var LinuxShell = require('shelljs');
@@ -442,17 +441,13 @@ var command;
     //Announce a filtered message for Linux or mac platform
     function play_XOS(file,index,SoundsFileName){
         try{
-            player.play({
-            path: './sounds/'+SoundsFileName+'/'+file[index++]+'.wav',sync:true
-            }).then(() => {
-                if(index<file.length)
-                    play_XOS(file,index,SoundsFileName); //Recursive call 
+            command = "aplay "+'./sounds/'+SoundsFileName+'/'+files[index++]+'.wav';
+            LinuxShell.exec(command,{async:true},()=>{
+                if(index<files.length)
+                    play_XOS(files,index,SoundsFileName);
                 else{
                     //Stop
                 }
-            }).catch((error) => {
-                console.log("Internal Error");
-                Log.ErrorLogging(error);
             });
         }catch(err){
             console.log("Internal Error");
