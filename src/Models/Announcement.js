@@ -409,8 +409,7 @@ var command;
                                 if(process.platform==cWindows){
                                     play_Windows(files,SoundsFileName);
                                 }else{
-                                    var index=0;
-                                    play_XOS(files,index,SoundsFileName);
+                                    play_XOS(files,SoundsFileName);
                                 }
                             }
                             callBack(innerResult);
@@ -439,21 +438,17 @@ var command;
     }
 
     //Announce a filtered message for Linux or mac platform
-    function play_XOS(files,index,SoundsFileName){
+    function play_XOS(files,SoundsFileName){
         try{
-            command = "aplay "+'./sounds/'+SoundsFileName+'/'+files[index++]+'.wav';
-            LinuxShell.exec(command,{async:true},()=>{
-                if(index<files.length)
-                    play_XOS(files,index,SoundsFileName);
-                else{
-                    //Stop
-                }
-            });
+            command = "aplay ";
+            for(let i=0;i<files.length;i++){
+                command +='./sounds/'+SoundsFileName+'/'+files[i]+'.wav ';
+            }
+            LinuxShell.exec(command,{async:true,silent:true},()=>{});
         }catch(err){
             Log.ErrorLogging(error);
         }
     }
-
     //Read the branch settings
     function readSettings(callBack){
         try{
