@@ -403,13 +403,14 @@ var command;
         try{
             filter((result,filterdMessage)=>{
                 if(result==cSUCCESS){
-                    getSoundsFileName((SoundsFileName)=>{
+                    getSoundsFileName((fileName)=>{
+                        filterdMessage.SoundsFileName=fileName;
                         getFiles((innerResult,files)=>{
                             if(innerResult==cSUCCESS){
                                 if(process.platform==cWindows){
-                                    play_Windows(files,SoundsFileName);
+                                    play_Windows(files,filterdMessage.SoundsFileName);
                                 }else{
-                                    play_XOS(files,SoundsFileName);
+                                    play_XOS(files,filterdMessage.SoundsFileName);
                                 }
                                 console.log(filterdMessage);
                             }
