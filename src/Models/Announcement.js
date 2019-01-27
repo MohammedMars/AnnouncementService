@@ -50,8 +50,6 @@ var command;
                     executionPolicy: 'Bypass',
                     noProfile: true
                     });
-            }else{
-                LinuxShell.exec("apt-get install alsa-utils");
             }
             readSettings((result,dataSettings)=>{
                 if(result==cSUCCESS){
@@ -414,7 +412,7 @@ var command;
                                 }else{
                                     play_XOS(files,filterdMessage.SoundsFileName);
                                 }
-                                console.log(filterdMessage);
+                                console.log("Ticket Announce Is Playing ....");
                             }
                             callBack(innerResult);
                             },filterdMessage)
