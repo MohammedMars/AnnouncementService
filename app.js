@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(appDir, 'views/public')));
 app.use('/Configurations', configurationsRouter);
-
+var os =  require('os');
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
@@ -38,6 +38,10 @@ app.use(function(err, req, res, next) {
 app.listen(Port,function(req,res){
   try{
       console.log("Server is Running ... ");
+      console.log(platform+" : "+os.platform());
+      console.log(hostname+" : "+os.hostname());
+      console.log(release+" : "+os.release());
+      console.log(arch+" : "+os.arch());
       emitter.emit('Start',"Starting The Announcemet Service");
   }
   catch(err){
