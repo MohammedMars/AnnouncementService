@@ -51,7 +51,7 @@ var command;
                     noProfile: true
                     });
             }else{
-                LinuxShell.exec("sudo apt-get install alsa-utils");
+                LinuxShell.exec("apt-get install alsa-utils");
             }
             readSettings((result,dataSettings)=>{
                 if(result==cSUCCESS){
