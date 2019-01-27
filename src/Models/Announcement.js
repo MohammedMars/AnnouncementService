@@ -411,6 +411,7 @@ var command;
                                 }else{
                                     play_XOS(files,SoundsFileName);
                                 }
+                                console.log(filterdMessage);
                             }
                             callBack(innerResult);
                             },filterdMessage)
@@ -446,7 +447,7 @@ var command;
             }
             LinuxShell.exec(command,{async:true,silent:true},()=>{});
         }catch(err){
-            Log.ErrorLogging(error);
+            Log.ErrorLogging(err);
         }
     }
     //Read the branch settings
