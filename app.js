@@ -38,10 +38,10 @@ app.use(function(err, req, res, next) {
 app.listen(Port,function(req,res){
   try{
       console.log("Server is Running ... ");
-      console.log(platform+" : "+os.platform());
-      console.log(hostname+" : "+os.hostname());
-      console.log(release+" : "+os.release());
-      console.log(arch+" : "+os.arch());
+      console.log("platform : "+os.platform());
+      console.log("hostname : "+os.hostname());
+      console.log("release : "+os.release());
+      console.log("arch : "+os.arch());
       emitter.emit('Start',"Starting The Announcemet Service");
   }
   catch(err){
